@@ -1,0 +1,297 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: VertexFactory</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">vertex</a> ]
+</div>
+
+<h1>Coverage Summary for Class: VertexFactory (vertex)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">VertexFactory</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    69.7%
+  </span>
+  <span class="absValue">
+    (76/ 109)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package vertex;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/*
+<i>4</i>&nbsp;Using the Builder method to create vertices and return it;
+<i>5</i>&nbsp;the vertices are recorded in the parserInputHelper(class)
+<i>6</i>&nbsp; */
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import exception.InnerClassException;
+<i>9</i>&nbsp;import exception.MessageFieldIncorrectException;
+<i>10</i>&nbsp;import exception.NoSuchTypeException;
+<i>11</i>&nbsp;import exception.RepFieldException;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import java.util.regex.Pattern;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;/*
+<i>17</i>&nbsp;Using the factory pattern,
+<i>18</i>&nbsp;separate the input (String[], typename, label),
+<i>19</i>&nbsp;String[] is the input (either cmd or file) separated by regex.
+<i>20</i>&nbsp;Label, typename is gotten by the regex and can also be found in String[].
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;createVertexOfCertainType: judge the input legal or not, and construct the vertex.
+<i>23</i>&nbsp;
+<i>24</i>&nbsp; */
+<b class="fc"><i>25</i>&nbsp;public class VertexFactory</b>
+<i>26</i>&nbsp;{
+<b class="fc"><i>27</i>&nbsp;    private static final String []vertexTypeSet = {&quot;Word&quot;, &quot;Person&quot;, &quot;Computer&quot;, &quot;Server&quot;, &quot;Router&quot;, &quot;Movie&quot;, &quot;Actor&quot;, &quot;Director&quot;};</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public Vertex createVertexOfCertainType(String TypeName, String label, String []res) throws Exception
+<i>30</i>&nbsp;    {
+<i>31</i>&nbsp;        //System.out.println(&quot;Vertex:    &quot;+TypeName+&quot;label:  &quot;+label);
+<b class="fc"><i>32</i>&nbsp;        if(TypeName.equals(vertexTypeSet[0]))//word</b>
+<i>33</i>&nbsp;        {
+<b class="fc"><i>34</i>&nbsp;            if(res.length != 2)</b>
+<b class="nc"><i>35</i>&nbsp;                throw new MessageFieldIncorrectException(&quot;[E] In Word: Input string length not correct.&quot;);</b>
+<b class="fc"><i>36</i>&nbsp;            Word ans = new Word(label);</b>
+<b class="fc"><i>37</i>&nbsp;            return ans;</b>
+<i>38</i>&nbsp;        }
+<b class="fc"><i>39</i>&nbsp;        else if(TypeName.equals(vertexTypeSet[1]))</b>
+<i>40</i>&nbsp;        {
+<b class="fc"><i>41</i>&nbsp;            if(res.length != 4)</b>
+<b class="nc"><i>42</i>&nbsp;                throw new MessageFieldIncorrectException(&quot;[E] In Person: Input string length not correct.&quot;+res.length);</b>
+<i>43</i>&nbsp;            try
+<i>44</i>&nbsp;            {
+<b class="fc"><i>45</i>&nbsp;                Person p = new Person(label, res[2], Integer.parseInt(res[3]));</b>
+<b class="fc"><i>46</i>&nbsp;                return p;</b>
+<i>47</i>&nbsp;            }
+<b class="fc"><i>48</i>&nbsp;            catch(Exception e)</b>
+<i>49</i>&nbsp;            {
+<b class="fc"><i>50</i>&nbsp;                throw new MessageFieldIncorrectException(&quot;[E] Integer not correct: Person&quot;);</b>
+<i>51</i>&nbsp;            }
+<i>52</i>&nbsp;        }
+<b class="fc"><i>53</i>&nbsp;        else if(TypeName.equals(vertexTypeSet[2]))</b>
+<i>54</i>&nbsp;        {
+<b class="fc"><i>55</i>&nbsp;            if(res.length != 3)</b>
+<b class="nc"><i>56</i>&nbsp;                throw new MessageFieldIncorrectException(&quot;[E] In Computer: Input String length not correct.&quot;);</b>
+<b class="fc"><i>57</i>&nbsp;            int []ip = new int[4];</b>
+<b class="fc"><i>58</i>&nbsp;            String Pat = &quot;[(.)]+&quot;;</b>
+<b class="fc"><i>59</i>&nbsp;            Pattern p = Pattern.compile(Pat);</b>
+<b class="fc"><i>60</i>&nbsp;            String[] ress = p.split(res[2]);</b>
+<i>61</i>&nbsp;            //for(String s:ress) System.out.println(s);
+<i>62</i>&nbsp;            try
+<i>63</i>&nbsp;            {
+<b class="fc"><i>64</i>&nbsp;                ip[0] = Integer.parseInt(ress[0]);</b>
+<b class="fc"><i>65</i>&nbsp;                ip[1] = Integer.parseInt(ress[1]);</b>
+<b class="fc"><i>66</i>&nbsp;                ip[2] = Integer.parseInt(ress[2]);</b>
+<b class="fc"><i>67</i>&nbsp;                ip[3] = Integer.parseInt(ress[3]);</b>
+<i>68</i>&nbsp;            }
+<b class="nc"><i>69</i>&nbsp;            catch(Exception e)</b>
+<i>70</i>&nbsp;            {
+<b class="nc"><i>71</i>&nbsp;                throw new MessageFieldIncorrectException(&quot;[E] Integer not correct:Computer IP&quot;);</b>
+<b class="fc"><i>72</i>&nbsp;            }</b>
+<b class="fc"><i>73</i>&nbsp;            Computer c=  new Computer(label, ip);</b>
+<b class="fc"><i>74</i>&nbsp;            return c;</b>
+<i>75</i>&nbsp;        }
+<b class="fc"><i>76</i>&nbsp;        else if(TypeName.equals(vertexTypeSet[3]))</b>
+<i>77</i>&nbsp;        {
+<b class="fc"><i>78</i>&nbsp;            if(res.length != 3)</b>
+<b class="nc"><i>79</i>&nbsp;                throw new NoSuchFieldException(&quot;[E] In Server: Input String length not correct.&quot;);</b>
+<b class="fc"><i>80</i>&nbsp;            int []ip = new int[4];</b>
+<b class="fc"><i>81</i>&nbsp;            String Pat = &quot;[(.)]+&quot;;</b>
+<b class="fc"><i>82</i>&nbsp;            Pattern p = Pattern.compile(Pat);</b>
+<b class="fc"><i>83</i>&nbsp;            String[] ress = p.split(res[2]);</b>
+<i>84</i>&nbsp;            try{
+<b class="fc"><i>85</i>&nbsp;                ip[0] = Integer.parseInt(ress[0]);</b>
+<b class="fc"><i>86</i>&nbsp;                ip[1] = Integer.parseInt(ress[1]);</b>
+<b class="fc"><i>87</i>&nbsp;                ip[2] = Integer.parseInt(ress[2]);</b>
+<b class="fc"><i>88</i>&nbsp;                ip[3] = Integer.parseInt(ress[3]);</b>
+<i>89</i>&nbsp;            }
+<b class="nc"><i>90</i>&nbsp;            catch(Exception e)</b>
+<i>91</i>&nbsp;            {
+<b class="nc"><i>92</i>&nbsp;                throw new MessageFieldIncorrectException(&quot;[E] Integer not correct:Server IP&quot;);</b>
+<b class="fc"><i>93</i>&nbsp;            }</b>
+<b class="fc"><i>94</i>&nbsp;            Server s = new Server(label, ip);</b>
+<b class="fc"><i>95</i>&nbsp;            return s;</b>
+<i>96</i>&nbsp;        }
+<b class="fc"><i>97</i>&nbsp;        else if(TypeName.equals(vertexTypeSet[4]))</b>
+<i>98</i>&nbsp;        {
+<b class="fc"><i>99</i>&nbsp;            if(res.length != 3)</b>
+<b class="nc"><i>100</i>&nbsp;                throw new NoSuchFieldException(&quot;[E] In Router: Input String length not correct.&quot;);</b>
+<b class="fc"><i>101</i>&nbsp;            int []ip = new int[4];</b>
+<b class="fc"><i>102</i>&nbsp;            String Pat = &quot;[(.)]+&quot;;</b>
+<b class="fc"><i>103</i>&nbsp;            Pattern p = Pattern.compile(Pat);</b>
+<b class="fc"><i>104</i>&nbsp;            String[] ress = p.split(res[2]);</b>
+<i>105</i>&nbsp;            try{
+<b class="fc"><i>106</i>&nbsp;                ip[0] = Integer.parseInt(ress[0]);</b>
+<b class="fc"><i>107</i>&nbsp;                ip[1] = Integer.parseInt(ress[1]);</b>
+<b class="fc"><i>108</i>&nbsp;                ip[2] = Integer.parseInt(ress[2]);</b>
+<b class="fc"><i>109</i>&nbsp;                ip[3] = Integer.parseInt(ress[3]);</b>
+<i>110</i>&nbsp;            }
+<b class="nc"><i>111</i>&nbsp;            catch(Exception e)</b>
+<i>112</i>&nbsp;            {
+<b class="nc"><i>113</i>&nbsp;                throw new MessageFieldIncorrectException(&quot;[E] Integer not correct:Router IP&quot;);</b>
+<b class="fc"><i>114</i>&nbsp;            }</b>
+<b class="fc"><i>115</i>&nbsp;            Router r=  new Router(label, ip);</b>
+<b class="fc"><i>116</i>&nbsp;            return r;</b>
+<i>117</i>&nbsp;        }
+<b class="fc"><i>118</i>&nbsp;        else if(TypeName.equals(vertexTypeSet[5]))//movie</b>
+<i>119</i>&nbsp;        {
+<b class="fc"><i>120</i>&nbsp;            if(res.length != 5)</b>
+<b class="nc"><i>121</i>&nbsp;                throw new NoSuchFieldException(&quot;[E] In Movie: Input String length not correct.&quot;);</b>
+<i>122</i>&nbsp;            try
+<i>123</i>&nbsp;            {
+<b class="fc"><i>124</i>&nbsp;                Movie m = new Movie(label, Integer.parseInt(res[2]), res[3], Double.parseDouble(res[4]));</b>
+<b class="fc"><i>125</i>&nbsp;                return m;</b>
+<i>126</i>&nbsp;            }
+<b class="nc"><i>127</i>&nbsp;            catch(Exception e)</b>
+<i>128</i>&nbsp;            {
+<b class="nc"><i>129</i>&nbsp;                throw new MessageFieldIncorrectException(&quot;[E] Integer or Double value not correct:Movie&quot;);</b>
+<i>130</i>&nbsp;            }
+<i>131</i>&nbsp;        }
+<b class="fc"><i>132</i>&nbsp;        else if(TypeName.equals(vertexTypeSet[6]))//actor</b>
+<i>133</i>&nbsp;        {
+<b class="fc"><i>134</i>&nbsp;            if(res.length != 4)</b>
+<b class="nc"><i>135</i>&nbsp;                throw new NoSuchFieldException(&quot;[E] In Actor: Input String length not correct.&quot;);</b>
+<i>136</i>&nbsp;            try
+<i>137</i>&nbsp;            {
+<b class="fc"><i>138</i>&nbsp;                Actor a =  new Actor(label, Integer.parseInt(res[2]), res[3]);</b>
+<b class="fc"><i>139</i>&nbsp;                return a;</b>
+<i>140</i>&nbsp;            }
+<b class="fc"><i>141</i>&nbsp;            catch(Exception e)</b>
+<i>142</i>&nbsp;            {
+<b class="fc"><i>143</i>&nbsp;                throw new MessageFieldIncorrectException(&quot;[E] Integer value not correct: Actor&quot;);</b>
+<i>144</i>&nbsp;            }
+<i>145</i>&nbsp;        }
+<b class="fc"><i>146</i>&nbsp;        else if(TypeName.equals(vertexTypeSet[7]))//director</b>
+<i>147</i>&nbsp;        {
+<b class="fc"><i>148</i>&nbsp;            if(res.length != 4)</b>
+<b class="nc"><i>149</i>&nbsp;                throw new NoSuchFieldException(&quot;[E] In Director: Input String length not correct.&quot;);</b>
+<i>150</i>&nbsp;            try{
+<b class="fc"><i>151</i>&nbsp;                Director d = new Director(label, Integer.parseInt(res[2]), res[3]);</b>
+<b class="fc"><i>152</i>&nbsp;                return d;</b>
+<i>153</i>&nbsp;            }
+<b class="nc"><i>154</i>&nbsp;            catch(Exception e)</b>
+<i>155</i>&nbsp;            {
+<b class="nc"><i>156</i>&nbsp;                throw new MessageFieldIncorrectException(&quot;[E] Integer value not correct: Director&quot;);</b>
+<i>157</i>&nbsp;            }
+<i>158</i>&nbsp;
+<i>159</i>&nbsp;        }
+<i>160</i>&nbsp;        else
+<i>161</i>&nbsp;        {
+<b class="fc"><i>162</i>&nbsp;            throw new NoSuchTypeException(&quot;vertices type name not known.&quot;);</b>
+<i>163</i>&nbsp;        }
+<i>164</i>&nbsp;    }
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    public Vertex createVertexFromPreventVertex(Vertex pre, String newLabel) throws InnerClassException, RepFieldException {
+<b class="fc"><i>167</i>&nbsp;        if(pre.getClass().equals(Actor.class))</b>
+<i>168</i>&nbsp;        {
+<b class="nc"><i>169</i>&nbsp;            Actor tmp = (Actor) pre;</b>
+<b class="nc"><i>170</i>&nbsp;            return new Actor(newLabel, tmp.getAge(), tmp.getGender());</b>
+<i>171</i>&nbsp;        }
+<b class="fc"><i>172</i>&nbsp;        else if(pre.getClass().equals(Computer.class))</b>
+<i>173</i>&nbsp;        {
+<b class="nc"><i>174</i>&nbsp;            Computer tmp = (Computer) pre;</b>
+<b class="nc"><i>175</i>&nbsp;            return new Computer(newLabel, tmp.getIPAddress());</b>
+<i>176</i>&nbsp;        }
+<b class="fc"><i>177</i>&nbsp;        else if(pre.getClass().equals(Director.class))</b>
+<i>178</i>&nbsp;        {
+<b class="nc"><i>179</i>&nbsp;            Director tmp = (Director) pre;</b>
+<b class="nc"><i>180</i>&nbsp;            return new Director(newLabel, tmp.getAge(), tmp.getGender());</b>
+<i>181</i>&nbsp;        }
+<b class="fc"><i>182</i>&nbsp;        else if(pre.getClass().equals(Movie.class))</b>
+<i>183</i>&nbsp;        {
+<b class="nc"><i>184</i>&nbsp;            Movie mov = (Movie) pre;</b>
+<b class="nc"><i>185</i>&nbsp;            return new Movie(newLabel, mov.getYrOnline(), mov.getCountry(),mov.getImdbScore());</b>
+<i>186</i>&nbsp;        }
+<b class="fc"><i>187</i>&nbsp;        else if(pre.getClass().equals(Person.class))</b>
+<i>188</i>&nbsp;        {
+<b class="nc"><i>189</i>&nbsp;            Person p = (Person) pre;</b>
+<b class="nc"><i>190</i>&nbsp;            return new Person(newLabel, p.getGender(), p.getAge());</b>
+<i>191</i>&nbsp;        }
+<b class="fc"><i>192</i>&nbsp;        else if(pre.getClass().equals(Router.class))</b>
+<i>193</i>&nbsp;        {
+<b class="nc"><i>194</i>&nbsp;            Router r = (Router) pre;</b>
+<b class="nc"><i>195</i>&nbsp;            return new Router(newLabel, r.getIPAddress());</b>
+<i>196</i>&nbsp;        }
+<b class="fc"><i>197</i>&nbsp;        else if(pre.getClass().equals(Server.class))</b>
+<i>198</i>&nbsp;        {
+<b class="nc"><i>199</i>&nbsp;            Server s = (Server) pre;</b>
+<b class="nc"><i>200</i>&nbsp;            return new Server(newLabel, s.getIPAddress());</b>
+<i>201</i>&nbsp;        }
+<b class="fc"><i>202</i>&nbsp;        else if(pre.getClass().equals(Word.class))</b>
+<i>203</i>&nbsp;        {
+<b class="fc"><i>204</i>&nbsp;            Word w = (Word) pre;</b>
+<b class="fc"><i>205</i>&nbsp;            return new Word(newLabel);</b>
+<i>206</i>&nbsp;        }
+<i>207</i>&nbsp;        else
+<i>208</i>&nbsp;        {
+<b class="nc"><i>209</i>&nbsp;            throw new InnerClassException(&quot;VertexFactory-createFromPreVertex&quot;);</b>
+<i>210</i>&nbsp;            //System.out.println(&quot;[E] Debug Error: Inner Class Config Error on VertexFactory-createFromPreVertex&quot;);
+<i>211</i>&nbsp;            //return null;
+<i>212</i>&nbsp;        }
+<i>213</i>&nbsp;    }
+<i>214</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-20 23:48</div>
+</div>
+</body>
+</html>

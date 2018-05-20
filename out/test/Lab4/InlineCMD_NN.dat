@@ -1,0 +1,3 @@
+data/NetworkTopology.dat
+edge --add RQ CommentTie weighted=Y 9.0 directed=Y R SQ
+exit

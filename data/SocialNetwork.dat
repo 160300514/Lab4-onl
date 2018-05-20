@@ -1,0 +1,11 @@
+GraphType = SocialNetwork
+GraphName = socialsocial
+VertexType = Person
+Vertex = <JSX, Person, <F, 20>>
+Vertex = <SX, Person, <F, 20>>
+Vertex = <SSA, Person, <M, 19>>
+Vertex = <TimRobbins, Person, <M, 60>>
+EdgeType = CommentTie, ForwardTie, FriendTie
+Edge = <LCI, CommentTie, 0.50, JSX, SX, Yes>
+Edge = <BFR, ForwardTie, 0.25, SX, SSA, Yes>
+Edge = <SCC, FriendTie, 0.25, SSA, JSX, Yes>

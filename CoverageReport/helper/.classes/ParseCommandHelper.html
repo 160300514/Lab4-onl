@@ -1,0 +1,373 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ParseCommandHelper</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">helper</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ParseCommandHelper (helper)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ParseCommandHelper</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (5/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    47.1%
+  </span>
+  <span class="absValue">
+    (74/ 157)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package helper;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import graph.Graph;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.io.InputStream;
+<i>6</i>&nbsp;import java.util.HashSet;
+<i>7</i>&nbsp;import java.util.Scanner;
+<i>8</i>&nbsp;import java.util.Set;
+<i>9</i>&nbsp;import java.util.regex.Matcher;
+<i>10</i>&nbsp;import java.util.regex.Pattern;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/*
+<i>13</i>&nbsp;Parse the input string to the class:
+<i>14</i>&nbsp;parse input helper, and judge by the
+<i>15</i>&nbsp;following classes. The test case is
+<i>16</i>&nbsp;recommend not contains \¡±.
+<i>17</i>&nbsp; */
+<b class="fc"><i>18</i>&nbsp;public class ParseCommandHelper</b>
+<i>19</i>&nbsp;{
+<b class="fc"><i>20</i>&nbsp;    private static final String[] possibleinputhead={&quot;vertex&quot;, &quot;edge&quot;, &quot;hyperedge&quot;};</b>
+<b class="fc"><i>21</i>&nbsp;    private static final String[] possiblecm = {&quot;--add&quot;, &quot;--delete&quot;};</b>
+<b class="fc"><i>22</i>&nbsp;    private static final String []vertexTypeSet = {&quot;Word&quot;, &quot;Person&quot;, &quot;Computer&quot;, &quot;Server&quot;, &quot;Router&quot;, &quot;Movie&quot;, &quot;Actor&quot;, &quot;Director&quot;};</b>
+<b class="fc"><i>23</i>&nbsp;    private static final String []edgeTypeSet = {&quot;WordNeighborhood&quot;, &quot;FriendTie&quot;, &quot;CommentTie&quot;, &quot;ForwardTie&quot;, &quot;NetworkConnection&quot;, &quot;MovieActorRelation&quot;, &quot;MovieDirectorRelation&quot;, &quot;SameMovieHyperEdge&quot;};</b>
+<i>24</i>&nbsp;    private String label;
+<i>25</i>&nbsp;    private String type;
+<i>26</i>&nbsp;    private String regex;
+<i>27</i>&nbsp;    private Graph  ans;
+<i>28</i>&nbsp;    private String v1;
+<i>29</i>&nbsp;    private String v2;
+<i>30</i>&nbsp;    private Double weight;
+<i>31</i>&nbsp;    private boolean weighted;
+<i>32</i>&nbsp;    private boolean directed;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    public String ParseCommandHelperInput()
+<i>35</i>&nbsp;    {
+<b class="nc"><i>36</i>&nbsp;        Scanner sc = new Scanner(System.in);</b>
+<b class="nc"><i>37</i>&nbsp;        return sc.nextLine();</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public Graph parseAndExecuteCommand(ParserInputHelper existGraphBuilder, String headline, InputStream is) throws Exception {
+<b class="fc"><i>41</i>&nbsp;        String []cmdhead = headline.split(&quot; &quot;);</b>
+<b class="fc"><i>42</i>&nbsp;        ans = existGraphBuilder.getAns();</b>
+<i>43</i>&nbsp;
+<b class="fc"><i>44</i>&nbsp;        if(headline.contains(&quot;Quit&quot;))</b>
+<b class="nc"><i>45</i>&nbsp;            return this.ans;</b>
+<i>46</i>&nbsp;
+<b class="fc"><i>47</i>&nbsp;        if(cmdhead[0].equals(possibleinputhead[0]))</b>
+<i>48</i>&nbsp;        {
+<b class="fc"><i>49</i>&nbsp;            if(cmdhead[1].equals(possiblecm[0]))//vertex --all label type</b>
+<i>50</i>&nbsp;            {
+<b class="fc"><i>51</i>&nbsp;                if(cmdhead.length!=4)</b>
+<i>52</i>&nbsp;                {
+<b class="fc"><i>53</i>&nbsp;                    System.out.println(&quot;[E] Vertex add type: vertex --add &lt;label&gt; &lt;type&gt;.\nInput format not convinced.&quot;);</b>
+<b class="fc"><i>54</i>&nbsp;                    return this.ans;</b>
+<i>55</i>&nbsp;                }
+<b class="fc"><i>56</i>&nbsp;                this.label = cmdhead[2];</b>
+<b class="fc"><i>57</i>&nbsp;                this.type  = cmdhead[3];</b>
+<b class="fc"><i>58</i>&nbsp;                this.regex = null;</b>
+<b class="fc"><i>59</i>&nbsp;                if(!existGraphBuilder.judgeExist(this.label))</b>
+<b class="fc"><i>60</i>&nbsp;                    ans = cmdIOConstructorVertex_Adder(existGraphBuilder, is);</b>
+<i>61</i>&nbsp;                else
+<b class="nc"><i>62</i>&nbsp;                    System.out.println(&quot;[E] Exist Label.\nHalted&quot;);</b>
+<i>63</i>&nbsp;            }
+<b class="fc"><i>64</i>&nbsp;            else if(cmdhead[1].equals(possiblecm[1]))</b>
+<i>65</i>&nbsp;            {
+<b class="fc"><i>66</i>&nbsp;                if(cmdhead.length!=3)</b>
+<i>67</i>&nbsp;                {
+<b class="nc"><i>68</i>&nbsp;                    System.out.println(&quot;[E] Vertex delete type: vertex --delete &lt;label&gt; .\nInput format not convinced.&quot;);</b>
+<b class="nc"><i>69</i>&nbsp;                    return this.ans;</b>
+<i>70</i>&nbsp;                }
+<b class="fc"><i>71</i>&nbsp;                this.regex = cmdhead[2];</b>
+<b class="fc"><i>72</i>&nbsp;                ans = existGraphBuilder.cmdVertexDeleter(this.regex);</b>
+<i>73</i>&nbsp;            }
+<i>74</i>&nbsp;        }
+<b class="fc"><i>75</i>&nbsp;        else if(cmdhead[0].equals(possibleinputhead[1]))</b>
+<i>76</i>&nbsp;        {
+<i>77</i>&nbsp;            //System.out.println(headline);
+<b class="fc"><i>78</i>&nbsp;            if(cmdhead[1].equals(possiblecm[0]))//edge --add label type [weighted=Y/N] [weight] [directed=Y/N] v1, v2</b>
+<i>79</i>&nbsp;            {
+<b class="fc"><i>80</i>&nbsp;                if(cmdhead.length &lt;= 7)</b>
+<i>81</i>&nbsp;                {
+<b class="fc"><i>82</i>&nbsp;                    System.out.println(&quot;[I;E] Please specify the information about: edge: weighted, weight, directed.&quot;);</b>
+<b class="fc"><i>83</i>&nbsp;                    System.out.println(&quot;[I;E] input format not supported.\nHalted.\nInput Formats: edge --add label type weighted=N directed=Y/N v1, v2 Or edge --add label type weighted=Y weight directed=Y/N v1, v2&quot;);</b>
+<b class="fc"><i>84</i>&nbsp;                    return this.ans;</b>
+<i>85</i>&nbsp;                }
+<b class="fc"><i>86</i>&nbsp;                this.label = cmdhead[2];</b>
+<b class="fc"><i>87</i>&nbsp;                this.type  = cmdhead[3];</b>
+<b class="fc"><i>88</i>&nbsp;                this.v1 = cmdhead[cmdhead.length-2];</b>
+<b class="fc"><i>89</i>&nbsp;                this.v2 = cmdhead[cmdhead.length-1];</b>
+<i>90</i>&nbsp;                //System.out.println(v1+v2);
+<b class="fc"><i>91</i>&nbsp;                if(cmdhead.length &lt;= 7)</b>
+<i>92</i>&nbsp;                {
+<b class="nc"><i>93</i>&nbsp;                    System.out.println(&quot;[I;E] Please specify the information about: edge: weighted, weight, directed.&quot;);</b>
+<b class="nc"><i>94</i>&nbsp;                    System.out.println(&quot;[I;E] input format not supported.\nHalted.\nInput Formats: edge --add label type weighted=N directed=Y/N v1, v2 Or edge --add label type weighted=Y weight directed=Y/N v1, v2&quot;);</b>
+<i>95</i>&nbsp;                }
+<i>96</i>&nbsp;                else
+<i>97</i>&nbsp;                {
+<b class="fc"><i>98</i>&nbsp;                    Pattern p = Pattern.compile(&quot;weighted=\\s*[\\w]+|directed=\\s*[\\w]+|\\s+[\\d+\\.*\\d*]+\\s+&quot;);</b>
+<b class="fc"><i>99</i>&nbsp;                    Matcher m = p.matcher(headline);</b>
+<b class="fc"><i>100</i>&nbsp;                    Pattern num = Pattern.compile(&quot;[0-9]+&quot;);</b>
+<b class="fc"><i>101</i>&nbsp;                    boolean able = true;</b>
+<b class="fc"><i>102</i>&nbsp;                    while(m.find())</b>
+<i>103</i>&nbsp;                    {
+<b class="fc"><i>104</i>&nbsp;                        String pat = headline.substring(m.start(), m.end());</b>
+<i>105</i>&nbsp;                        //System.out.println(pat);
+<b class="fc"><i>106</i>&nbsp;                        String[] kv = pat.split(&quot;[ |=]&quot;);</b>
+<b class="fc"><i>107</i>&nbsp;                        if (pat.contains(&quot;weighted&quot;))</b>
+<i>108</i>&nbsp;                        {
+<b class="fc"><i>109</i>&nbsp;                            weighted = kv[1].contains(&quot;Y&quot;);</b>
+<b class="fc"><i>110</i>&nbsp;                            if(!weighted) weight = -1.0;</b>
+<b class="fc"><i>111</i>&nbsp;                        } else if (pat.contains(&quot;directed&quot;))</b>
+<i>112</i>&nbsp;                        {
+<b class="fc"><i>113</i>&nbsp;                            directed = kv[1].contains(&quot;Y&quot;);</b>
+<b class="fc"><i>114</i>&nbsp;                        } else if (num.matcher(pat.split(&quot;[\\s]&quot;)[1]).find())</b>
+<i>115</i>&nbsp;                        {
+<b class="fc"><i>116</i>&nbsp;                            if (weighted)</b>
+<i>117</i>&nbsp;                            {
+<b class="fc"><i>118</i>&nbsp;                                weight = Double.parseDouble(kv[1]);</b>
+<i>119</i>&nbsp;                                //System.out.println(weight);
+<i>120</i>&nbsp;                            }
+<i>121</i>&nbsp;                            else {
+<b class="nc"><i>122</i>&nbsp;                                able = false;</b>
+<b class="nc"><i>123</i>&nbsp;                                System.out.println(&quot;[E] Non-Weighted edge with weight.\nHalted.&quot;);</b>
+<i>124</i>&nbsp;                                //throw new RepFieldException(&quot;[E] Non-Weighted edge with weight.\nHalted.&quot;);
+<i>125</i>&nbsp;                            }
+<i>126</i>&nbsp;                        }
+<b class="fc"><i>127</i>&nbsp;                    }</b>
+<b class="fc"><i>128</i>&nbsp;                    if(able)</b>
+<i>129</i>&nbsp;                    {
+<i>130</i>&nbsp;                        //System.out.println(&quot;INNN&quot;);
+<b class="fc"><i>131</i>&nbsp;                        ans = cmdIOConstructorEdge_Adder(existGraphBuilder, cmdhead);</b>
+<i>132</i>&nbsp;                        //for(String s:cmdhead) System.out.println(s);
+<i>133</i>&nbsp;                    }
+<b class="fc"><i>134</i>&nbsp;                }</b>
+<i>135</i>&nbsp;            }
+<b class="fc"><i>136</i>&nbsp;            else if(cmdhead[1].equals(possiblecm[1]))</b>
+<i>137</i>&nbsp;            {
+<b class="fc"><i>138</i>&nbsp;                ans = existGraphBuilder.cmdEdgeDeleter(cmdhead[2]);</b>
+<i>139</i>&nbsp;            }
+<i>140</i>&nbsp;        }
+<b class="fc"><i>141</i>&nbsp;        else if(cmdhead[0].equals(possibleinputhead[2]))</b>
+<i>142</i>&nbsp;        {
+<b class="nc"><i>143</i>&nbsp;            this.label = cmdhead[2];</b>
+<b class="nc"><i>144</i>&nbsp;            this.type  = cmdhead[3];</b>
+<b class="nc"><i>145</i>&nbsp;            if(cmdhead[1].equals(possiblecm[0]))</b>
+<i>146</i>&nbsp;            {
+<b class="nc"><i>147</i>&nbsp;                ans = cmdIOConstructorEdge_Adder(existGraphBuilder, cmdhead);//4+</b>
+<i>148</i>&nbsp;            }
+<b class="nc"><i>149</i>&nbsp;            else if(cmdhead[1].equals(possiblecm[1]))</b>
+<i>150</i>&nbsp;            {
+<b class="nc"><i>151</i>&nbsp;                System.out.println(&quot;[E] Operation not supported: hyper-edge deleter.\nHalted.&quot;);</b>
+<i>152</i>&nbsp;            }
+<i>153</i>&nbsp;        }
+<b class="fc"><i>154</i>&nbsp;        return this.ans;</b>
+<i>155</i>&nbsp;    }
+<i>156</i>&nbsp;
+<i>157</i>&nbsp;
+<i>158</i>&nbsp;    private Graph cmdIOConstructorEdge_Adder(ParserInputHelper pih, String[] cmdIn) throws Exception//edge --add label type [weighted=Y/N] [weight] [directed=Y/N] v1, v2
+<i>159</i>&nbsp;    {
+<i>160</i>&nbsp;        //test legal:edgeTypeSet = {&quot;WordNeighborhood&quot;, &quot;FriendTie&quot;,
+<i>161</i>&nbsp;        // &quot;CommentTie&quot;, &quot;ForwardTie&quot;, &quot;NetworkConnection&quot;, &quot;MovieActorRelation&quot;,
+<i>162</i>&nbsp;        // &quot;MovieDirectorRelation&quot;, &quot;SameMovieHyperEdge&quot;};
+<i>163</i>&nbsp;        //System.out.println(v1+v2);
+<b class="fc"><i>164</i>&nbsp;        if(!(pih.judgeExist(v1) &amp;&amp; pih.judgeExist(v2)))</b>
+<i>165</i>&nbsp;        {
+<b class="fc"><i>166</i>&nbsp;            System.out.println(&quot;[E] Vertex not Exist.&quot;);</b>
+<b class="fc"><i>167</i>&nbsp;            return this.ans;</b>
+<i>168</i>&nbsp;        }
+<b class="nc"><i>169</i>&nbsp;        if(!this.type.equals(edgeTypeSet[7]))</b>
+<i>170</i>&nbsp;        {
+<b class="nc"><i>171</i>&nbsp;            pih.cmdEdgeAdder(type, label, weight, new String[]{label, type, String.valueOf(weight), v1, v2, (directed ? &quot;Yes&quot;:&quot;No&quot;)});</b>
+<i>172</i>&nbsp;        }
+<b class="nc"><i>173</i>&nbsp;        else if(this.type.equals(edgeTypeSet[7]))</b>
+<i>174</i>&nbsp;        {
+<b class="nc"><i>175</i>&nbsp;            Set&lt;String&gt; tmp = new HashSet&lt;&gt;();</b>
+<b class="nc"><i>176</i>&nbsp;            tmp.add(label);tmp.add(type);</b>
+<b class="nc"><i>177</i>&nbsp;            for(int i=4;i&lt;cmdIn.length;i++) tmp.add(cmdIn[i]);</b>
+<b class="nc"><i>178</i>&nbsp;            String[] res = (String[]) tmp.toArray();</b>
+<b class="nc"><i>179</i>&nbsp;            pih.cmdEdgeAdder(type, label, 0, res);</b>
+<b class="nc"><i>180</i>&nbsp;        }</b>
+<i>181</i>&nbsp;        else
+<i>182</i>&nbsp;        {
+<b class="nc"><i>183</i>&nbsp;            System.out.println(&quot;[E] Illegal Edge type&quot;+this.type+&quot;\n.Halted.&quot;);</b>
+<i>184</i>&nbsp;        }
+<b class="nc"><i>185</i>&nbsp;        return this.ans;</b>
+<i>186</i>&nbsp;    }
+<i>187</i>&nbsp;
+<i>188</i>&nbsp;    private Graph cmdIOConstructorVertex_Adder(ParserInputHelper pih, InputStream is) throws Exception {
+<b class="fc"><i>189</i>&nbsp;        Scanner sc = new Scanner(is);</b>
+<b class="fc"><i>190</i>&nbsp;        if(type.equals(vertexTypeSet[0]))</b>
+<i>191</i>&nbsp;        {
+<b class="fc"><i>192</i>&nbsp;            System.out.println(&quot;Word construct finished.&quot;);</b>
+<b class="fc"><i>193</i>&nbsp;            return pih.cmdVertexAdder(label, type, &quot;Vertex&quot;, new String[]{label, type});</b>
+<i>194</i>&nbsp;        }
+<b class="fc"><i>195</i>&nbsp;        else if(type.equals(vertexTypeSet[1]))</b>
+<i>196</i>&nbsp;        {
+<b class="fc"><i>197</i>&nbsp;            System.out.println(&quot;Person Vertex needs two other params: Gender/Age: Input format: Gender/Age or Gender,age or in each line: &quot;);</b>
+<b class="fc"><i>198</i>&nbsp;            String line = sc.nextLine();</b>
+<b class="nc"><i>199</i>&nbsp;            String[] split = line.split(&quot;[(\\s|/,)]&quot;);</b>
+<b class="nc"><i>200</i>&nbsp;            if(split.length==1)</b>
+<i>201</i>&nbsp;            {
+<b class="nc"><i>202</i>&nbsp;                String l = sc.nextLine();</b>
+<i>203</i>&nbsp;                try{
+<b class="nc"><i>204</i>&nbsp;                    Integer.parseInt(l);</b>
+<i>205</i>&nbsp;                }
+<b class="nc"><i>206</i>&nbsp;                catch(Exception e)</b>
+<i>207</i>&nbsp;                {
+<b class="nc"><i>208</i>&nbsp;                    System.out.println(&quot;Illegal Input.\nTerminated.&quot;);</b>
+<b class="nc"><i>209</i>&nbsp;                    return this.ans;</b>
+<b class="nc"><i>210</i>&nbsp;                }</b>
+<b class="nc"><i>211</i>&nbsp;            }</b>
+<i>212</i>&nbsp;            else
+<i>213</i>&nbsp;            {
+<i>214</i>&nbsp;                try{
+<b class="nc"><i>215</i>&nbsp;                    Integer.parseInt(split[1]);</b>
+<i>216</i>&nbsp;                }
+<b class="nc"><i>217</i>&nbsp;                catch(Exception e)</b>
+<i>218</i>&nbsp;                {
+<b class="nc"><i>219</i>&nbsp;                    System.out.println(&quot;Illegal Input.\nTerminated.&quot;);</b>
+<b class="nc"><i>220</i>&nbsp;                    return this.ans;</b>
+<b class="nc"><i>221</i>&nbsp;                }</b>
+<i>222</i>&nbsp;            }
+<b class="nc"><i>223</i>&nbsp;            return pih.cmdVertexAdder( label, type,&quot;Vertex&quot;, new String[]{label, type, split[0], split[1]});</b>
+<i>224</i>&nbsp;        }
+<b class="fc"><i>225</i>&nbsp;        else if(type.equals(vertexTypeSet[2]))</b>
+<i>226</i>&nbsp;        {
+<b class="nc"><i>227</i>&nbsp;            System.out.println(&quot;Computer Vertex needs another parameter: IP address. Input Format: IP=A.B.C.D&quot;);</b>
+<b class="nc"><i>228</i>&nbsp;            String line = sc.nextLine();</b>
+<b class="nc"><i>229</i>&nbsp;            String[] ip = line.split(&quot;[.]+&quot;);</b>
+<b class="nc"><i>230</i>&nbsp;            return pih.cmdVertexAdder(label, type, &quot;Vertex&quot;, new String[]{label, type, ip[0], ip[1], ip[2], ip[3]});</b>
+<i>231</i>&nbsp;        }
+<b class="fc"><i>232</i>&nbsp;        else if(type.equals(vertexTypeSet[3]))</b>
+<i>233</i>&nbsp;        {
+<b class="nc"><i>234</i>&nbsp;            System.out.println(&quot;Server Vertex needs another parameter: IP address. Input Format: IP=A.B.C.D&quot;);</b>
+<b class="nc"><i>235</i>&nbsp;            String line = sc.nextLine();</b>
+<b class="nc"><i>236</i>&nbsp;            String[] ip = line.split(&quot;[.]+&quot;);</b>
+<b class="nc"><i>237</i>&nbsp;            return pih.cmdVertexAdder(label, type, &quot;Vertex&quot;, new String[]{label, type, ip[0], ip[1], ip[2], ip[3]});</b>
+<i>238</i>&nbsp;        }
+<b class="fc"><i>239</i>&nbsp;        else if(type.equals(vertexTypeSet[4]))</b>
+<i>240</i>&nbsp;        {
+<b class="nc"><i>241</i>&nbsp;            System.out.println(&quot;Router Vertex needs another parameter: IP address. Input Format: IP=A.B.C.D&quot;);</b>
+<b class="nc"><i>242</i>&nbsp;            String line = sc.nextLine();</b>
+<b class="nc"><i>243</i>&nbsp;            String[] ip = line.split(&quot;[.]+&quot;);</b>
+<b class="nc"><i>244</i>&nbsp;            return pih.cmdVertexAdder(label, type, &quot;Vertex&quot;, new String[]{label, type, ip[0], ip[1], ip[2], ip[3]});</b>
+<i>245</i>&nbsp;        }
+<b class="fc"><i>246</i>&nbsp;        else if(type.equals(vertexTypeSet[5]))//movie</b>
+<i>247</i>&nbsp;        {
+<b class="nc"><i>248</i>&nbsp;            System.out.println(&quot;Movie Vertex needs three other parameters: Year/Country/IMDb Score : Input Format: Year/Country/IMDb Score or three lines.&quot;);</b>
+<b class="nc"><i>249</i>&nbsp;            String line = sc.nextLine();</b>
+<b class="nc"><i>250</i>&nbsp;            String[] sp = line.split(&quot;[/|\\s]+&quot;);</b>
+<b class="nc"><i>251</i>&nbsp;            int cnt = sp.length;</b>
+<b class="nc"><i>252</i>&nbsp;            String []res = new String[5];</b>
+<b class="nc"><i>253</i>&nbsp;            res[0] = label;</b>
+<b class="nc"><i>254</i>&nbsp;            res[1] = type;</b>
+<b class="nc"><i>255</i>&nbsp;            System.arraycopy(sp, 0, res, 2, sp.length);</b>
+<b class="nc"><i>256</i>&nbsp;            while(cnt&lt;3)</b>
+<i>257</i>&nbsp;            {
+<b class="nc"><i>258</i>&nbsp;                String nl = sc.nextLine();</b>
+<b class="nc"><i>259</i>&nbsp;                String []spp = nl.split(&quot;[/|\\s]+&quot;);</b>
+<b class="nc"><i>260</i>&nbsp;                for(int i=0;i&lt;spp.length;i++)res[cnt+i+2]= spp[i];</b>
+<b class="nc"><i>261</i>&nbsp;                cnt+=spp.length;</b>
+<b class="nc"><i>262</i>&nbsp;            }</b>
+<b class="nc"><i>263</i>&nbsp;            return pih.cmdVertexAdder(label, type, &quot;Vertex&quot;, res);</b>
+<i>264</i>&nbsp;        }
+<b class="fc"><i>265</i>&nbsp;        else if(type.equals(vertexTypeSet[6]))//actor</b>
+<i>266</i>&nbsp;        {
+<b class="nc"><i>267</i>&nbsp;            System.out.println(&quot;Actor Vertex needs two other parameters: Age/Gender:(M/F) : Input Format: Age/Gender.&quot;);</b>
+<b class="nc"><i>268</i>&nbsp;            String line = sc.nextLine();</b>
+<b class="nc"><i>269</i>&nbsp;            String[] sp = line.split(&quot;[\\s|/]&quot;);</b>
+<b class="nc"><i>270</i>&nbsp;            if(sp.length!=2){</b>
+<b class="nc"><i>271</i>&nbsp;                System.out.println(&quot;Input Not Formatted.\nTermined&quot;);</b>
+<b class="nc"><i>272</i>&nbsp;                return this.ans;</b>
+<i>273</i>&nbsp;            }
+<b class="nc"><i>274</i>&nbsp;            return pih.cmdVertexAdder(label, type,&quot;Vertex&quot;, new String[]{label, type, sp[0], sp[1]});</b>
+<i>275</i>&nbsp;        }
+<b class="fc"><i>276</i>&nbsp;        else if(type.equals(vertexTypeSet[7]))</b>
+<i>277</i>&nbsp;        {
+<b class="nc"><i>278</i>&nbsp;            System.out.println(&quot;Director Vertex needs two other parameters: Age/Gender:(M/F) : Input Format: Age/Gender.&quot;);</b>
+<b class="nc"><i>279</i>&nbsp;            String line = sc.nextLine();</b>
+<b class="nc"><i>280</i>&nbsp;            String[] sp = line.split(&quot;[\\s|/]&quot;);</b>
+<b class="nc"><i>281</i>&nbsp;            if(sp.length!=2){</b>
+<b class="nc"><i>282</i>&nbsp;                System.out.println(&quot;Input Not Formatted.\nTermined&quot;);</b>
+<b class="nc"><i>283</i>&nbsp;                return this.ans;</b>
+<i>284</i>&nbsp;            }
+<b class="nc"><i>285</i>&nbsp;            return pih.cmdVertexAdder(label, type,&quot;Vertex&quot;, new String[]{label, type, sp[0], sp[1]});</b>
+<i>286</i>&nbsp;        }
+<b class="fc"><i>287</i>&nbsp;        System.out.println(&quot;No such type of vertex.\nHalted&quot;);</b>
+<b class="fc"><i>288</i>&nbsp;        return this.ans;</b>
+<i>289</i>&nbsp;    }
+<i>290</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-20 23:48</div>
+</div>
+</body>
+</html>

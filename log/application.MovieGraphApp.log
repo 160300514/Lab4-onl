@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-05-20T15:55:21.675938700Z</date>
+  <millis>1526831721675</millis>
+  <nanos>938700</nanos>
+  <sequence>56</sequence>
+  <logger>application.MovieGraphApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input: file: data/MovieGraph_01.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.691559800Z</date>
+  <millis>1526831721691</millis>
+  <nanos>559800</nanos>
+  <sequence>57</sequence>
+  <logger>application.MovieGraphApp</logger>
+  <level>SEVERE</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[E] Integer value not correct: Actor</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.691559800Z</date>
+  <millis>1526831721691</millis>
+  <nanos>559800</nanos>
+  <sequence>58</sequence>
+  <logger>application.MovieGraphApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/MovieGraph_02.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.691559800Z</date>
+  <millis>1526831721691</millis>
+  <nanos>559800</nanos>
+  <sequence>59</sequence>
+  <logger>application.MovieGraphApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>vertices type name not known.</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.691559800Z</date>
+  <millis>1526831721691</millis>
+  <nanos>559800</nanos>
+  <sequence>60</sequence>
+  <logger>application.MovieGraphApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/MovieGraph_03.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.691559800Z</date>
+  <millis>1526831721691</millis>
+  <nanos>559800</nanos>
+  <sequence>61</sequence>
+  <logger>application.MovieGraphApp</logger>
+  <level>SEVERE</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[E] Integer value not correct: Actor</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.691559800Z</date>
+  <millis>1526831721691</millis>
+  <nanos>559800</nanos>
+  <sequence>62</sequence>
+  <logger>application.MovieGraphApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/MovieGraph_04.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.691559800Z</date>
+  <millis>1526831721691</millis>
+  <nanos>559800</nanos>
+  <sequence>63</sequence>
+  <logger>application.MovieGraphApp</logger>
+  <level>SEVERE</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[E] Integer value not correct: Actor</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.691559800Z</date>
+  <millis>1526831721691</millis>
+  <nanos>559800</nanos>
+  <sequence>64</sequence>
+  <logger>application.MovieGraphApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/MovieGraph.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.707181300Z</date>
+  <millis>1526831721707</millis>
+  <nanos>181300</nanos>
+  <sequence>65</sequence>
+  <logger>application.MovieGraphApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: exit</message>
+</record>

@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-05-20T15:55:21.338874600Z</date>
+  <millis>1526831721338</millis>
+  <nanos>874600</nanos>
+  <sequence>22</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input: file: data/NetworkTopology.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.338874600Z</date>
+  <millis>1526831721338</millis>
+  <nanos>874600</nanos>
+  <sequence>23</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>graph.NetworkTopology cannot be cast to graph.GraphPoet</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.338874600Z</date>
+  <millis>1526831721338</millis>
+  <nanos>874600</nanos>
+  <sequence>24</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/WordGraph2wwewq.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.338874600Z</date>
+  <millis>1526831721338</millis>
+  <nanos>874600</nanos>
+  <sequence>25</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>SEVERE</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[E] File Path not exists.</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.338874600Z</date>
+  <millis>1526831721338</millis>
+  <nanos>874600</nanos>
+  <sequence>26</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/WordGraph.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.370116Z</date>
+  <millis>1526831721370</millis>
+  <nanos>116000</nanos>
+  <sequence>27</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: save -s SQ1</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.370116Z</date>
+  <millis>1526831721370</millis>
+  <nanos>116000</nanos>
+  <sequence>28</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: vertex --add R Word</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.370116Z</date>
+  <millis>1526831721370</millis>
+  <nanos>116000</nanos>
+  <sequence>29</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: GraphPoet --help</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.370116Z</date>
+  <millis>1526831721370</millis>
+  <nanos>116000</nanos>
+  <sequence>30</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: edge --add TMP SX R</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.370116Z</date>
+  <millis>1526831721370</millis>
+  <nanos>116000</nanos>
+  <sequence>31</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: save -recall SQ1</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.370116Z</date>
+  <millis>1526831721370</millis>
+  <nanos>116000</nanos>
+  <sequence>32</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: degreeCentrality</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.385737900Z</date>
+  <millis>1526831721385</millis>
+  <nanos>737900</nanos>
+  <sequence>33</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: degreeCentrality SX</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.385737900Z</date>
+  <millis>1526831721385</millis>
+  <nanos>737900</nanos>
+  <sequence>34</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: closenessCentrality SX</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.385737900Z</date>
+  <millis>1526831721385</millis>
+  <nanos>737900</nanos>
+  <sequence>35</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: betweennessCentrality SX</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.385737900Z</date>
+  <millis>1526831721385</millis>
+  <nanos>737900</nanos>
+  <sequence>36</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: vertex --add S Word</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.385737900Z</date>
+  <millis>1526831721385</millis>
+  <nanos>737900</nanos>
+  <sequence>37</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: vertex --add SS dsdww</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.385737900Z</date>
+  <millis>1526831721385</millis>
+  <nanos>737900</nanos>
+  <sequence>38</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: edge --add TMP SX R</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.385737900Z</date>
+  <millis>1526831721385</millis>
+  <nanos>737900</nanos>
+  <sequence>39</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: edge --add TMP SX S</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.401360300Z</date>
+  <millis>1526831721401</millis>
+  <nanos>360300</nanos>
+  <sequence>40</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: inDegreeCentrality SX</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.401360300Z</date>
+  <millis>1526831721401</millis>
+  <nanos>360300</nanos>
+  <sequence>41</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: outDegreeCentrality SX</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.401360300Z</date>
+  <millis>1526831721401</millis>
+  <nanos>360300</nanos>
+  <sequence>42</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: modify vertex SX SXX</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.401360300Z</date>
+  <millis>1526831721401</millis>
+  <nanos>360300</nanos>
+  <sequence>43</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: distance SX JSX</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.401360300Z</date>
+  <millis>1526831721401</millis>
+  <nanos>360300</nanos>
+  <sequence>44</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: radius</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.510708Z</date>
+  <millis>1526831721510</millis>
+  <nanos>708000</nanos>
+  <sequence>45</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: diameter</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.510708Z</date>
+  <millis>1526831721510</millis>
+  <nanos>708000</nanos>
+  <sequence>46</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: log --get information</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.573195400Z</date>
+  <millis>1526831721573</millis>
+  <nanos>195400</nanos>
+  <sequence>47</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: log --get error</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.604436300Z</date>
+  <millis>1526831721604</millis>
+  <nanos>436300</nanos>
+  <sequence>48</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: log --get time</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.613445400Z</date>
+  <millis>1526831721613</millis>
+  <nanos>445400</nanos>
+  <sequence>49</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>SEVERE</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[E] Text '2018-05-19T11:02Z' could not be parsed at index 16</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.613445400Z</date>
+  <millis>1526831721613</millis>
+  <nanos>445400</nanos>
+  <sequence>50</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: edge --delete LCI</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.613445400Z</date>
+  <millis>1526831721613</millis>
+  <nanos>445400</nanos>
+  <sequence>51</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: vertex --delete $R[\\w]+</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.613445400Z</date>
+  <millis>1526831721613</millis>
+  <nanos>445400</nanos>
+  <sequence>52</sequence>
+  <logger>application.GraphPoetApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: exit</message>
+</record>

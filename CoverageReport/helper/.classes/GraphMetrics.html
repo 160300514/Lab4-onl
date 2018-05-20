@@ -1,0 +1,467 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GraphMetrics</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">helper</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GraphMetrics (helper)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GraphMetrics</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (10/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    82.7%
+  </span>
+  <span class="absValue">
+    (167/ 202)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package helper;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import edge.Edge;
+<i>4</i>&nbsp;import edge.SameMovieHyperEdge;
+<i>5</i>&nbsp;import graph.Graph;
+<i>6</i>&nbsp;import graph.MovieGraph;
+<i>7</i>&nbsp;import graph.NetworkTopology;
+<i>8</i>&nbsp;import javafx.util.Pair;
+<i>9</i>&nbsp;import vertex.Vertex;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.util.*;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;/*
+<i>14</i>&nbsp;Static Method:
+<i>15</i>&nbsp;degreeCentrality: for a specified point the ans is the sum of in/out degree, and for the graph:
+<i>16</i>&nbsp;the point shares the largest in and out degree, and the return value is equal to the sum of  the
+<i>17</i>&nbsp; value of the largest point minored by each point and normalized before return.
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;shortestPath(Graph, vertex): as an private method, return Pair
+<i>20</i>&nbsp;using the algorithm of dijkstra
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;closenessCentrality: return one count of centrality, caluated by shortestPath
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;betweennessCentrality: the shortest path between two point v1 and v2, and if this path passes v,
+<i>25</i>&nbsp;the count added 1, and the counter is divided by the whole number of path.
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;In/out degree: the size of source/target points set.
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;Distance(v1, v2): using Floyd algorithm. Return a double value of the distance between v1 and v2.
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;Eccentricity(v): First introduced in math to describe ellipse. Graph Theory describe the value by
+<i>32</i>&nbsp;the shortest path between v1 and v2.
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;Radius: of Graph g: calculated by eccentricity of every graph and divide this value by 2.
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;Diameter: radius*2.
+<i>37</i>&nbsp;
+<i>38</i>&nbsp; */
+<i>39</i>&nbsp;
+<b class="nc"><i>40</i>&nbsp;public class GraphMetrics</b>
+<i>41</i>&nbsp;{
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public static &lt;L,E&gt; double degreeCentrality(Graph&lt;L,E&gt; g, L v)
+<i>44</i>&nbsp;    {
+<b class="fc"><i>45</i>&nbsp;        return g.targets(v).size()+g.targets(v).size();</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    public static &lt;L,E&gt; double degreeCentrality(Graph&lt;L,E&gt; g)
+<i>49</i>&nbsp;    {
+<b class="fc"><i>50</i>&nbsp;        if(g.edges().size()==0) return 0;</b>
+<b class="fc"><i>51</i>&nbsp;        Double maxDeg = -1.0;</b>
+<b class="fc"><i>52</i>&nbsp;        for(L v: g.vertices())</b>
+<i>53</i>&nbsp;        {
+<b class="fc"><i>54</i>&nbsp;            maxDeg = Math.max(maxDeg, g.sources(v).size()+g.targets(v).size());</b>
+<b class="fc"><i>55</i>&nbsp;        }</b>
+<b class="fc"><i>56</i>&nbsp;        Double sum = 0.0;</b>
+<b class="fc"><i>57</i>&nbsp;        for(L v:g.vertices())</b>
+<i>58</i>&nbsp;        {
+<b class="fc"><i>59</i>&nbsp;            sum+=(maxDeg-(g.sources(v).size()+g.targets(v).size()));</b>
+<b class="fc"><i>60</i>&nbsp;        }</b>
+<b class="fc"><i>61</i>&nbsp;        Integer V = g.vertices().size();</b>
+<b class="fc"><i>62</i>&nbsp;        return sum/(V*V-3*V+2);</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    private static &lt;L extends Vertex,E extends Edge&gt; Pair&lt;Double, int[]&gt; shortestPath(Graph&lt;L ,E&gt; g, L v)
+<i>66</i>&nbsp;    {
+<b class="fc"><i>67</i>&nbsp;        Object[] vert = g.vertices().toArray();</b>
+<b class="fc"><i>68</i>&nbsp;        Map&lt;Object, Integer&gt; reverse = new HashMap&lt;&gt;();</b>
+<b class="fc"><i>69</i>&nbsp;        int i = 0;</b>
+<b class="fc"><i>70</i>&nbsp;        for (Object vertex : vert) {</b>
+<b class="fc"><i>71</i>&nbsp;            reverse.put(vertex, i++);</b>
+<i>72</i>&nbsp;        }
+<b class="fc"><i>73</i>&nbsp;        double [][] map = new double[vert.length+10][vert.length+10];</b>
+<b class="fc"><i>74</i>&nbsp;        int num = vert.length;</b>
+<b class="fc"><i>75</i>&nbsp;        for(Object vertex: vert)</b>
+<i>76</i>&nbsp;        {
+<b class="fc"><i>77</i>&nbsp;            int poss = reverse.get(vertex);</b>
+<b class="fc"><i>78</i>&nbsp;            Map&lt;Vertex, List&lt;Double&gt;&gt; tmp = (Map&lt;Vertex, List&lt;Double&gt;&gt;) g.targets((L)vertex);</b>
+<b class="fc"><i>79</i>&nbsp;            for(Vertex vt : tmp.keySet())</b>
+<i>80</i>&nbsp;            {
+<b class="fc"><i>81</i>&nbsp;                int end = reverse.get(vt);</b>
+<b class="fc"><i>82</i>&nbsp;                List&lt;Double&gt; tmpp = tmp.get(vt);</b>
+<b class="fc"><i>83</i>&nbsp;                double ans=1e12;</b>
+<b class="fc"><i>84</i>&nbsp;                for(Double d:tmpp) if(ans-d&gt;=1e-5) ans= d;</b>
+<b class="fc"><i>85</i>&nbsp;                map[poss][end] = ans;</b>
+<b class="fc"><i>86</i>&nbsp;            }</b>
+<i>87</i>&nbsp;        }
+<b class="fc"><i>88</i>&nbsp;        for(int j=0;j&lt;vert.length;j++)</b>
+<b class="fc"><i>89</i>&nbsp;            for(int k=0;k&lt;vert.length;k++)</b>
+<b class="fc"><i>90</i>&nbsp;                if(map[j][k]!=0) map[j][k]=1e12;</b>
+<i>91</i>&nbsp;
+<b class="fc"><i>92</i>&nbsp;        boolean []find = new boolean[vert.length+10];</b>
+<b class="fc"><i>93</i>&nbsp;        double []minlist = new double[vert.length+10];</b>
+<b class="fc"><i>94</i>&nbsp;        int []prenode = new int[vert.length+10];</b>
+<i>95</i>&nbsp;
+<b class="fc"><i>96</i>&nbsp;        for(int j=0;j&lt;vert.length;j++)</b>
+<i>97</i>&nbsp;        {
+<b class="fc"><i>98</i>&nbsp;            find[j] = false;</b>
+<b class="fc"><i>99</i>&nbsp;            minlist[j] = map[reverse.get(v)][j];</b>
+<b class="fc"><i>100</i>&nbsp;            prenode[j]=  j;</b>
+<i>101</i>&nbsp;        }
+<b class="fc"><i>102</i>&nbsp;        int near = 0;</b>
+<b class="fc"><i>103</i>&nbsp;        for(int j=0;j&lt;vert.length;j++)</b>
+<i>104</i>&nbsp;        {
+<b class="fc"><i>105</i>&nbsp;            double min = 1e12;</b>
+<b class="fc"><i>106</i>&nbsp;            for(int k=0;k&lt;vert.length;k++)</b>
+<i>107</i>&nbsp;            {
+<b class="fc"><i>108</i>&nbsp;                if(!find[j] &amp;&amp; minlist[j] &lt; min)</b>
+<i>109</i>&nbsp;                {
+<b class="fc"><i>110</i>&nbsp;                    min = minlist[j];</b>
+<b class="fc"><i>111</i>&nbsp;                    near = j;</b>
+<i>112</i>&nbsp;                }
+<i>113</i>&nbsp;            }
+<b class="fc"><i>114</i>&nbsp;            find[near] = true;</b>
+<i>115</i>&nbsp;
+<b class="fc"><i>116</i>&nbsp;            for(int k=0;k&lt;vert.length;k++)</b>
+<i>117</i>&nbsp;            {
+<b class="fc"><i>118</i>&nbsp;                if(!find[k] &amp;&amp; (min+map[near][k])&lt;minlist[k])</b>
+<i>119</i>&nbsp;                {
+<b class="nc"><i>120</i>&nbsp;                    prenode[k] = near;</b>
+<b class="nc"><i>121</i>&nbsp;                    minlist[k] = min+map[near][k];</b>
+<i>122</i>&nbsp;                }
+<i>123</i>&nbsp;            }
+<i>124</i>&nbsp;        }
+<b class="fc"><i>125</i>&nbsp;        double sum = 0;</b>
+<b class="fc"><i>126</i>&nbsp;        for(int k=0;k&lt;vert.length;k++)</b>
+<i>127</i>&nbsp;        {
+<b class="fc"><i>128</i>&nbsp;            if(minlist[k]&lt;1e9)</b>
+<b class="fc"><i>129</i>&nbsp;                sum+=minlist[k];</b>
+<i>130</i>&nbsp;        }
+<b class="fc"><i>131</i>&nbsp;        return new Pair&lt;&gt;(1/(sum/(vert.length-1)), prenode);</b>
+<i>132</i>&nbsp;    }
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;    public static &lt;L extends Vertex,E extends Edge&gt; double closenessCentrality(Graph&lt;L ,E&gt; g, L v)
+<i>135</i>&nbsp;    {
+<b class="fc"><i>136</i>&nbsp;        if(g.edges().size()==0) return 0;</b>
+<b class="fc"><i>137</i>&nbsp;        return shortestPath(g, v).getKey();</b>
+<i>138</i>&nbsp;    }
+<i>139</i>&nbsp;
+<i>140</i>&nbsp;    public static &lt;L extends Vertex,E extends Edge&gt; double betweennessCentrality(Graph&lt;L,E&gt; g, L v)
+<i>141</i>&nbsp;    {
+<b class="fc"><i>142</i>&nbsp;        if(g.edges().size()==0) return 0;</b>
+<b class="fc"><i>143</i>&nbsp;        Object[] vert = g.vertices().toArray();</b>
+<b class="fc"><i>144</i>&nbsp;        Map&lt;Object, Integer&gt; reverse = new HashMap&lt;&gt;();</b>
+<b class="fc"><i>145</i>&nbsp;        int cnt=0;</b>
+<b class="fc"><i>146</i>&nbsp;        for(Object vt: vert) reverse.put(vt, cnt++);</b>
+<b class="fc"><i>147</i>&nbsp;        Set&lt;Edge&gt; edges = (Set&lt;Edge&gt;) g.edges();</b>
+<b class="fc"><i>148</i>&nbsp;        double [][]wei = new double[vert.length+10][vert.length+10];</b>
+<b class="fc"><i>149</i>&nbsp;        boolean Path[][] = new boolean[vert.length+10][vert.length+10];</b>
+<b class="fc"><i>150</i>&nbsp;        int [][] path =  new int[vert.length][vert.length];</b>
+<b class="fc"><i>151</i>&nbsp;        for(int i=0;i&lt;vert.length;i++)</b>
+<b class="fc"><i>152</i>&nbsp;            for(int j=0;j&lt;vert.length;j++) {</b>
+<b class="fc"><i>153</i>&nbsp;                path[i][j]=-1;wei[i][j]=1e12;</b>
+<b class="fc"><i>154</i>&nbsp;                Path[i][j]=false;</b>
+<i>155</i>&nbsp;            }
+<b class="fc"><i>156</i>&nbsp;        for(Edge e: edges)</b>
+<i>157</i>&nbsp;        {
+<b class="fc"><i>158</i>&nbsp;            if(!(e instanceof SameMovieHyperEdge))</b>
+<i>159</i>&nbsp;            {
+<b class="fc"><i>160</i>&nbsp;              for(Vertex vs: e.sourceVertices())</b>
+<i>161</i>&nbsp;              {
+<b class="fc"><i>162</i>&nbsp;                  for(Vertex vt: e.targetVertices())</b>
+<i>163</i>&nbsp;                  {
+<b class="fc"><i>164</i>&nbsp;                      wei[reverse.get(vs)][reverse.get(vt)] = e.getWeight()==-1? 1:e.getWeight();</b>
+<b class="fc"><i>165</i>&nbsp;                  }</b>
+<b class="fc"><i>166</i>&nbsp;              }</b>
+<i>167</i>&nbsp;            }
+<b class="fc"><i>168</i>&nbsp;        }</b>
+<b class="fc"><i>169</i>&nbsp;        for(int k=0;k&lt;vert.length;k++)</b>
+<i>170</i>&nbsp;        {
+<b class="fc"><i>171</i>&nbsp;            for(int i=0;i&lt;vert.length;i++)</b>
+<i>172</i>&nbsp;            {
+<b class="fc"><i>173</i>&nbsp;                for(int j=0;j&lt;vert.length;j++)</b>
+<i>174</i>&nbsp;                {
+<b class="fc"><i>175</i>&nbsp;                    if(wei[i][j]&gt;wei[i][k]+wei[k][j])</b>
+<i>176</i>&nbsp;                    {
+<b class="fc"><i>177</i>&nbsp;                        wei[i][j]=wei[i][k]+wei[k][j];</b>
+<b class="fc"><i>178</i>&nbsp;                        path[i][j] = k;</b>
+<i>179</i>&nbsp;                    }
+<i>180</i>&nbsp;                }
+<i>181</i>&nbsp;            }
+<i>182</i>&nbsp;        }
+<i>183</i>&nbsp;
+<i>184</i>&nbsp;
+<b class="fc"><i>185</i>&nbsp;        for(int i=0;i&lt;vert.length;i++)</b>
+<i>186</i>&nbsp;        {
+<b class="fc"><i>187</i>&nbsp;            for(int j=0;j&lt;vert.length;j++)</b>
+<i>188</i>&nbsp;            {
+<b class="fc"><i>189</i>&nbsp;                if(i==reverse.get(v)||j==reverse.get(v))</b>
+<b class="fc"><i>190</i>&nbsp;                    continue;</b>
+<b class="fc"><i>191</i>&nbsp;                int pos=j;</b>
+<b class="fc"><i>192</i>&nbsp;                Stack&lt;Integer&gt; st = new Stack&lt;&gt;();</b>
+<b class="fc"><i>193</i>&nbsp;                st.add(j);</b>
+<b class="fc"><i>194</i>&nbsp;                while(pos!=i)</b>
+<i>195</i>&nbsp;                {
+<b class="fc"><i>196</i>&nbsp;                    if(pos==reverse.get(v))</b>
+<i>197</i>&nbsp;                    {
+<b class="fc"><i>198</i>&nbsp;                        Path[i][pos] = true;</b>
+<b class="fc"><i>199</i>&nbsp;                        break;</b>
+<i>200</i>&nbsp;                    }
+<b class="fc"><i>201</i>&nbsp;                    pos = path[i][pos];</b>
+<b class="fc"><i>202</i>&nbsp;                    if(pos==-1) break;</b>
+<b class="fc"><i>203</i>&nbsp;                    if(pos&gt;=0&amp;&amp;Path[i][pos])</b>
+<b class="nc"><i>204</i>&nbsp;                        break;</b>
+<b class="fc"><i>205</i>&nbsp;                    st.add(pos);</b>
+<i>206</i>&nbsp;                }
+<b class="fc"><i>207</i>&nbsp;                if(pos!=i)</b>
+<i>208</i>&nbsp;                {
+<b class="fc"><i>209</i>&nbsp;                    while(!st.empty())</b>
+<i>210</i>&nbsp;                    {
+<b class="fc"><i>211</i>&nbsp;                        Path[i][st.pop()] = true;</b>
+<i>212</i>&nbsp;                    }
+<i>213</i>&nbsp;                }
+<i>214</i>&nbsp;            }
+<i>215</i>&nbsp;        }
+<i>216</i>&nbsp;        //count
+<b class="fc"><i>217</i>&nbsp;        int sum=0;</b>
+<b class="fc"><i>218</i>&nbsp;        for(int i=0;i&lt;vert.length;i++)</b>
+<i>219</i>&nbsp;        {
+<b class="fc"><i>220</i>&nbsp;            for(int j=0;j&lt;vert.length;j++)</b>
+<i>221</i>&nbsp;            {
+<b class="fc"><i>222</i>&nbsp;                if(Path[i][j]) sum+=1;</b>
+<i>223</i>&nbsp;            }
+<i>224</i>&nbsp;        }
+<b class="fc"><i>225</i>&nbsp;        if(g instanceof NetworkTopology || g instanceof MovieGraph)</b>
+<b class="nc"><i>226</i>&nbsp;            return sum*2/((vert.length-1)*(vert.length-2));</b>
+<i>227</i>&nbsp;        else
+<b class="fc"><i>228</i>&nbsp;            return sum/((vert.length-1)*(vert.length-2));</b>
+<i>229</i>&nbsp;    }
+<i>230</i>&nbsp;
+<i>231</i>&nbsp;    public static &lt;L,E&gt; double inDegreeCentrality(Graph&lt;L,E&gt; g, L v)
+<i>232</i>&nbsp;    {
+<b class="fc"><i>233</i>&nbsp;        if(g.edges().size()==0) return 0;</b>
+<b class="fc"><i>234</i>&nbsp;        return g.sources(v).size();</b>
+<i>235</i>&nbsp;    }
+<i>236</i>&nbsp;
+<i>237</i>&nbsp;    public static &lt;L,E&gt; double outDegreeCentrality(Graph&lt;L,E&gt; g, L v)
+<i>238</i>&nbsp;    {
+<b class="fc"><i>239</i>&nbsp;        if(g.edges().size()==0) return 0;</b>
+<b class="fc"><i>240</i>&nbsp;        return g.targets(v).size();</b>
+<i>241</i>&nbsp;    }
+<i>242</i>&nbsp;
+<i>243</i>&nbsp;    public static &lt;L,E&gt; double distance(Graph&lt;L,E&gt; g, L start, L end)
+<i>244</i>&nbsp;    {
+<b class="nc"><i>245</i>&nbsp;        if(g.edges().size()==0) return 0;</b>
+<b class="nc"><i>246</i>&nbsp;        Object[] vert = g.vertices().toArray();</b>
+<b class="nc"><i>247</i>&nbsp;        Map&lt;Object, Integer&gt; reverse = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>248</i>&nbsp;        int cnt=0;</b>
+<b class="nc"><i>249</i>&nbsp;        for(Object vt: vert) reverse.put(vt, cnt++);</b>
+<b class="nc"><i>250</i>&nbsp;        Set&lt;Edge&gt; edges = (Set&lt;Edge&gt;) g.edges();</b>
+<b class="nc"><i>251</i>&nbsp;        double [][]wei = new double[vert.length+10][vert.length+10];</b>
+<b class="nc"><i>252</i>&nbsp;        boolean Path[][] = new boolean[vert.length+10][vert.length+10];</b>
+<b class="nc"><i>253</i>&nbsp;        int [][] path =  new int[vert.length][vert.length];</b>
+<b class="nc"><i>254</i>&nbsp;        for(int i=0;i&lt;vert.length;i++)</b>
+<b class="nc"><i>255</i>&nbsp;            for(int j=0;j&lt;vert.length;j++) {</b>
+<b class="nc"><i>256</i>&nbsp;                path[i][j]=-1;wei[i][j]=1e12;</b>
+<b class="nc"><i>257</i>&nbsp;                Path[i][j]=false;</b>
+<i>258</i>&nbsp;            }
+<b class="nc"><i>259</i>&nbsp;        for(Edge e: edges)</b>
+<i>260</i>&nbsp;        {
+<b class="nc"><i>261</i>&nbsp;            if(!(e instanceof SameMovieHyperEdge))</b>
+<i>262</i>&nbsp;            {
+<b class="nc"><i>263</i>&nbsp;                for(Vertex vs: e.sourceVertices())</b>
+<i>264</i>&nbsp;                {
+<b class="nc"><i>265</i>&nbsp;                    for(Vertex vt: e.targetVertices())</b>
+<i>266</i>&nbsp;                    {
+<b class="nc"><i>267</i>&nbsp;                        wei[reverse.get(vs)][reverse.get(vt)] = e.getWeight()==-1? 1:e.getWeight();</b>
+<b class="nc"><i>268</i>&nbsp;                    }</b>
+<b class="nc"><i>269</i>&nbsp;                }</b>
+<i>270</i>&nbsp;            }
+<b class="nc"><i>271</i>&nbsp;        }</b>
+<b class="nc"><i>272</i>&nbsp;        for(int k=0;k&lt;vert.length;k++)</b>
+<i>273</i>&nbsp;        {
+<b class="nc"><i>274</i>&nbsp;            for(int i=0;i&lt;vert.length;i++)</b>
+<i>275</i>&nbsp;            {
+<b class="nc"><i>276</i>&nbsp;                for(int j=0;j&lt;vert.length;j++)</b>
+<i>277</i>&nbsp;                {
+<b class="nc"><i>278</i>&nbsp;                    if(wei[i][j]&gt;wei[i][k]+wei[k][j])</b>
+<i>279</i>&nbsp;                    {
+<b class="nc"><i>280</i>&nbsp;                        wei[i][j]=wei[i][k]+wei[k][j];</b>
+<b class="nc"><i>281</i>&nbsp;                        path[i][j] = k;</b>
+<i>282</i>&nbsp;                    }
+<i>283</i>&nbsp;                }
+<i>284</i>&nbsp;            }
+<i>285</i>&nbsp;        }
+<b class="nc"><i>286</i>&nbsp;        return wei[reverse.get((Vertex)start)][reverse.get((Vertex)end)];</b>
+<i>287</i>&nbsp;    }
+<i>288</i>&nbsp;
+<i>289</i>&nbsp;    public static &lt;L extends Vertex,E extends Edge&gt; double eccentricity(Graph&lt;L,E&gt; g, L v)
+<i>290</i>&nbsp;    {
+<b class="fc"><i>291</i>&nbsp;        if(g.edges().size()==0) return 0;</b>
+<b class="fc"><i>292</i>&nbsp;        Object[] vert = g.vertices().toArray();</b>
+<b class="fc"><i>293</i>&nbsp;        Map&lt;Object, Integer&gt; reverse = new HashMap&lt;&gt;();</b>
+<b class="fc"><i>294</i>&nbsp;        int cnt=0;</b>
+<b class="fc"><i>295</i>&nbsp;        for(Object vt: vert) reverse.put(vt, cnt++);</b>
+<b class="fc"><i>296</i>&nbsp;        Set&lt;Edge&gt; edges = (Set&lt;Edge&gt;) g.edges();</b>
+<b class="fc"><i>297</i>&nbsp;        double [][]wei = new double[vert.length+10][vert.length+10];</b>
+<b class="fc"><i>298</i>&nbsp;        boolean Path[][] = new boolean[vert.length+10][vert.length+10];</b>
+<b class="fc"><i>299</i>&nbsp;        int [][] path =  new int[vert.length][vert.length];</b>
+<b class="fc"><i>300</i>&nbsp;        for(int i=0;i&lt;vert.length;i++)</b>
+<b class="fc"><i>301</i>&nbsp;            for(int j=0;j&lt;vert.length;j++) {</b>
+<b class="fc"><i>302</i>&nbsp;                path[i][j]=-1;wei[i][j]=1e12;</b>
+<b class="fc"><i>303</i>&nbsp;                Path[i][j]=false;</b>
+<i>304</i>&nbsp;            }
+<b class="fc"><i>305</i>&nbsp;        for(Edge e: edges)</b>
+<i>306</i>&nbsp;        {
+<b class="fc"><i>307</i>&nbsp;            if(!(e instanceof SameMovieHyperEdge))</b>
+<i>308</i>&nbsp;            {
+<b class="fc"><i>309</i>&nbsp;                for(Vertex vs: e.sourceVertices())</b>
+<i>310</i>&nbsp;                {
+<b class="fc"><i>311</i>&nbsp;                    for(Vertex vt: e.targetVertices())</b>
+<i>312</i>&nbsp;                    {
+<b class="fc"><i>313</i>&nbsp;                        wei[reverse.get(vs)][reverse.get(vt)] = e.getWeight()==-1? 1:e.getWeight();</b>
+<b class="fc"><i>314</i>&nbsp;                    }</b>
+<b class="fc"><i>315</i>&nbsp;                }</b>
+<i>316</i>&nbsp;            }
+<b class="fc"><i>317</i>&nbsp;        }</b>
+<b class="fc"><i>318</i>&nbsp;        for(int k=0;k&lt;vert.length;k++)</b>
+<i>319</i>&nbsp;        {
+<b class="fc"><i>320</i>&nbsp;            for(int i=0;i&lt;vert.length;i++)</b>
+<i>321</i>&nbsp;            {
+<b class="fc"><i>322</i>&nbsp;                for(int j=0;j&lt;vert.length;j++)</b>
+<i>323</i>&nbsp;                {
+<b class="fc"><i>324</i>&nbsp;                    if(wei[i][j]&gt;wei[i][k]+wei[k][j])</b>
+<i>325</i>&nbsp;                    {
+<b class="nc"><i>326</i>&nbsp;                        wei[i][j]=wei[i][k]+wei[k][j];</b>
+<b class="nc"><i>327</i>&nbsp;                        path[i][j] = k;</b>
+<i>328</i>&nbsp;                    }
+<i>329</i>&nbsp;                }
+<i>330</i>&nbsp;            }
+<i>331</i>&nbsp;        }
+<b class="fc"><i>332</i>&nbsp;        int choicePoint = reverse.get((Vertex)v);</b>
+<b class="fc"><i>333</i>&nbsp;        boolean judge = true;</b>
+<b class="fc"><i>334</i>&nbsp;        for(int j=0;j&lt;vert.length;j++)</b>
+<b class="fc"><i>335</i>&nbsp;            if(wei[choicePoint][j]&lt;1e10)</b>
+<b class="fc"><i>336</i>&nbsp;                judge=false;</b>
+<b class="fc"><i>337</i>&nbsp;        Queue&lt;Integer&gt; que=  new ArrayDeque&lt;&gt;();</b>
+<b class="fc"><i>338</i>&nbsp;        Queue&lt;Integer&gt; edgepoint = new ArrayDeque&lt;&gt;();</b>
+<b class="fc"><i>339</i>&nbsp;        que.add(choicePoint);</b>
+<b class="fc"><i>340</i>&nbsp;        Map&lt;Object, Boolean&gt; vis = new HashMap&lt;&gt;();</b>
+<b class="fc"><i>341</i>&nbsp;        vis.put(choicePoint, true);</b>
+<b class="fc"><i>342</i>&nbsp;        while(!que.isEmpty())</b>
+<i>343</i>&nbsp;        {
+<b class="fc"><i>344</i>&nbsp;            choicePoint = que.poll();</b>
+<b class="fc"><i>345</i>&nbsp;            for(int j=0;j&lt;vert.length;j++)</b>
+<i>346</i>&nbsp;            {
+<b class="fc"><i>347</i>&nbsp;                if(wei[choicePoint][j]&lt;1e10&amp;&amp;(!vis.containsKey(j)||!vis.get(j)))</b>
+<i>348</i>&nbsp;                {
+<b class="fc"><i>349</i>&nbsp;                    que.add(j);</b>
+<b class="fc"><i>350</i>&nbsp;                    vis.put(j, true);</b>
+<i>351</i>&nbsp;                }
+<i>352</i>&nbsp;                else
+<b class="fc"><i>353</i>&nbsp;                    edgepoint.add(j);</b>
+<i>354</i>&nbsp;            }
+<i>355</i>&nbsp;        }
+<b class="fc"><i>356</i>&nbsp;        double ans=-1;</b>
+<b class="fc"><i>357</i>&nbsp;        while(!edgepoint.isEmpty())</b>
+<i>358</i>&nbsp;        {
+<b class="fc"><i>359</i>&nbsp;            int poi = edgepoint.poll();</b>
+<b class="fc"><i>360</i>&nbsp;            if(wei[reverse.get(v)][poi]&lt;1e10)</b>
+<i>361</i>&nbsp;            {
+<b class="fc"><i>362</i>&nbsp;                ans = Math.max(ans, wei[reverse.get(v)][poi]);</b>
+<i>363</i>&nbsp;            }
+<b class="fc"><i>364</i>&nbsp;        }</b>
+<b class="fc"><i>365</i>&nbsp;        return ans;</b>
+<i>366</i>&nbsp;    }
+<i>367</i>&nbsp;
+<i>368</i>&nbsp;    public static &lt;L extends Vertex,E extends Edge&gt; double radius(Graph&lt;L,E&gt; g)
+<i>369</i>&nbsp;    {
+<b class="fc"><i>370</i>&nbsp;        if(g.edges().size()==0) return 0;</b>
+<b class="fc"><i>371</i>&nbsp;        double ans = -1;</b>
+<b class="fc"><i>372</i>&nbsp;        for(L v: g.vertices())</b>
+<i>373</i>&nbsp;        {
+<b class="fc"><i>374</i>&nbsp;            ans = Math.max(ans, eccentricity(g, v));</b>
+<b class="fc"><i>375</i>&nbsp;        }</b>
+<b class="fc"><i>376</i>&nbsp;        return ans/2.0;</b>
+<i>377</i>&nbsp;    }
+<i>378</i>&nbsp;
+<i>379</i>&nbsp;    public static &lt;L extends Vertex,E extends Edge&gt; double diameter(Graph&lt;L,E&gt; g)
+<i>380</i>&nbsp;    {
+<b class="fc"><i>381</i>&nbsp;        return radius(g)*2;</b>
+<i>382</i>&nbsp;    }
+<i>383</i>&nbsp;}
+<i>384</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-20 23:48</div>
+</div>
+</body>
+</html>

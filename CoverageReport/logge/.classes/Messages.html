@@ -1,0 +1,224 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Messages</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">logge</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Messages (logge)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Messages</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (4/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (6/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package logge;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.File;
+<i>4</i>&nbsp;import java.io.FileNotFoundException;
+<i>5</i>&nbsp;import java.io.IOException;
+<i>6</i>&nbsp;import java.time.Instant;
+<i>7</i>&nbsp;import java.util.HashSet;
+<i>8</i>&nbsp;import java.util.Scanner;
+<i>9</i>&nbsp;import java.util.Set;
+<i>10</i>&nbsp;import java.util.logging.FileHandler;
+<i>11</i>&nbsp;import java.util.logging.Level;
+<i>12</i>&nbsp;import java.util.logging.Logger;
+<i>13</i>&nbsp;import java.util.logging.XMLFormatter;
+<i>14</i>&nbsp;import java.util.regex.Pattern;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;public class logGeneratorStream
+<i>17</i>&nbsp;{
+<i>18</i>&nbsp;    private XMLFormatter fm = new XMLFormatter();
+<i>19</i>&nbsp;    private Logger log;
+<i>20</i>&nbsp;    private FileHandler fh;// = new FileHandler(&quot;log/&quot;);
+<i>21</i>&nbsp;    private String file;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public logGeneratorStream(String className) throws IOException {
+<i>24</i>&nbsp;        log = Logger.getLogger(className);
+<i>25</i>&nbsp;        log.setLevel(Level.INFO);
+<i>26</i>&nbsp;        file = &quot;log/&quot;+className+&quot;.log&quot;;
+<i>27</i>&nbsp;        //File f = new File(&quot;log/&quot;+className+&quot;.log&quot;);
+<i>28</i>&nbsp;        fh = new FileHandler(&quot;log/&quot;+className+&quot;.log&quot;);
+<i>29</i>&nbsp;        log.addHandler(fh);
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;    public void Appand(String Information)
+<i>32</i>&nbsp;    {
+<i>33</i>&nbsp;        if(Information.contains(&quot;[E]&quot;))
+<i>34</i>&nbsp;        {
+<i>35</i>&nbsp;            log.severe(Information);
+<i>36</i>&nbsp;        }
+<i>37</i>&nbsp;        else if(Information.contains(&quot;[W]&quot;))
+<i>38</i>&nbsp;        {
+<i>39</i>&nbsp;            log.warning(Information);
+<i>40</i>&nbsp;        }
+<i>41</i>&nbsp;        else
+<i>42</i>&nbsp;        {
+<i>43</i>&nbsp;            log.info(Information);
+<i>44</i>&nbsp;        }
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public Set&lt;String&gt; resolve(Instant st, Instant end) throws FileNotFoundException
+<i>48</i>&nbsp;    {
+<i>49</i>&nbsp;        Set&lt;String&gt; ans = new HashSet&lt;&gt;();
+<i>50</i>&nbsp;        Set&lt;Messages&gt; mess = xmlDecoder();
+<i>51</i>&nbsp;        for(Messages m:mess)
+<i>52</i>&nbsp;        {
+<i>53</i>&nbsp;            if(m.getDate().isAfter(st) &amp;&amp; m.getDate().isBefore(end))
+<i>54</i>&nbsp;                ans.add(m.getMessages());
+<i>55</i>&nbsp;        }
+<i>56</i>&nbsp;        return ans;
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public Set&lt;String&gt; resolve(Instant st) throws FileNotFoundException//&gt;=st
+<i>60</i>&nbsp;    {
+<i>61</i>&nbsp;        Set&lt;Messages&gt; mess = xmlDecoder();
+<i>62</i>&nbsp;        Set&lt;String&gt; ans = new HashSet&lt;&gt;();
+<i>63</i>&nbsp;        for(Messages m: mess)
+<i>64</i>&nbsp;        {
+<i>65</i>&nbsp;            if(m.getDate().isAfter(st))
+<i>66</i>&nbsp;                ans.add(m.getMessages());
+<i>67</i>&nbsp;        }
+<i>68</i>&nbsp;        return ans;
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public Set&lt;String&gt; resolve(String regex) throws FileNotFoundException {
+<i>72</i>&nbsp;        Set&lt;Messages&gt; mess = xmlDecoder();
+<i>73</i>&nbsp;        Set&lt;String&gt; ans = new HashSet&lt;&gt;();
+<i>74</i>&nbsp;        for(Messages m: mess)
+<i>75</i>&nbsp;        {
+<i>76</i>&nbsp;            if(m.getMessages().contains(regex))
+<i>77</i>&nbsp;                ans.add(m.getMessages());
+<i>78</i>&nbsp;        }
+<i>79</i>&nbsp;        return ans;
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    public Set&lt;Messages&gt; xmlDecoder() throws FileNotFoundException {
+<i>83</i>&nbsp;        File f= new File(file);
+<i>84</i>&nbsp;        Scanner sc=  new Scanner(f);
+<i>85</i>&nbsp;        Set&lt;Messages&gt; ans = new HashSet&lt;&gt;();
+<i>86</i>&nbsp;        while(sc.hasNext())
+<i>87</i>&nbsp;        {
+<i>88</i>&nbsp;            String str = sc.nextLine();
+<i>89</i>&nbsp;            Pattern p0 = Pattern.compile(&quot;&lt;record&gt;&quot;);
+<i>90</i>&nbsp;            if(p0.matcher(str).matches())
+<i>91</i>&nbsp;            {
+<i>92</i>&nbsp;                Messages tmp = new Messages();
+<i>93</i>&nbsp;                while(!str.equals(&quot;&lt;/record&gt;&quot;))
+<i>94</i>&nbsp;                {
+<i>95</i>&nbsp;                    str = sc.nextLine();
+<i>96</i>&nbsp;                    if(str.contains(&quot;&lt;date&gt;&quot;))
+<i>97</i>&nbsp;                    {
+<i>98</i>&nbsp;                        String[] s = str.split(&quot;&lt;date&gt;|&lt;/date&gt;&quot;);
+<i>99</i>&nbsp;                        tmp.setDate(s[1]);
+<i>100</i>&nbsp;                    }
+<i>101</i>&nbsp;                    if(str.contains(&quot;&lt;message&gt;&quot;))
+<i>102</i>&nbsp;                    {
+<i>103</i>&nbsp;                        String []a = str.split(&quot;&lt;message&gt;|&lt;/message&gt;&quot;);
+<i>104</i>&nbsp;                        tmp.setMessages(a[1]);
+<i>105</i>&nbsp;                    }
+<i>106</i>&nbsp;                }
+<i>107</i>&nbsp;                ans.add(tmp);
+<i>108</i>&nbsp;            }
+<i>109</i>&nbsp;        }
+<i>110</i>&nbsp;        return ans;
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;}
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;class Messages
+<i>115</i>&nbsp;{
+<i>116</i>&nbsp;    ////Date date;
+<i>117</i>&nbsp;    Instant it;
+<i>118</i>&nbsp;    String messages;
+<b class="fc"><i>119</i>&nbsp;    public Messages(){}</b>
+<i>120</i>&nbsp;    public Messages(String dates, String mess)
+<b class="nc"><i>121</i>&nbsp;    {</b>
+<b class="nc"><i>122</i>&nbsp;        it = Instant.parse(dates);</b>
+<i>123</i>&nbsp;        //messages = mess;
+<b class="nc"><i>124</i>&nbsp;    }</b>
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;    public Instant getDate() {
+<b class="nc"><i>127</i>&nbsp;        return it;</b>
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;    public String getMessages() {
+<b class="fc"><i>131</i>&nbsp;        return messages;</b>
+<i>132</i>&nbsp;    }
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;    public void setDate(String date) {
+<b class="fc"><i>135</i>&nbsp;        this.it = Instant.parse(date);</b>
+<b class="fc"><i>136</i>&nbsp;    }</b>
+<i>137</i>&nbsp;
+<i>138</i>&nbsp;    public void setMessages(String messages) {
+<b class="fc"><i>139</i>&nbsp;        this.messages = messages;</b>
+<b class="fc"><i>140</i>&nbsp;    }</b>
+<i>141</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-20 23:48</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-05-20T15:55:20.872895500Z</date>
+  <millis>1526831720872</millis>
+  <nanos>895500</nanos>
+  <sequence>0</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input: file: data/NetworkTopology.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.120174900Z</date>
+  <millis>1526831721120</millis>
+  <nanos>174900</nanos>
+  <sequence>1</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>graph.NetworkTopology cannot be cast to graph.SocialNetwork</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.120174900Z</date>
+  <millis>1526831721120</millis>
+  <nanos>174900</nanos>
+  <sequence>2</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/MovieGraph.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.260767Z</date>
+  <millis>1526831721260</millis>
+  <nanos>767000</nanos>
+  <sequence>3</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>graph.MovieGraph cannot be cast to graph.SocialNetwork</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.260767Z</date>
+  <millis>1526831721260</millis>
+  <nanos>767000</nanos>
+  <sequence>4</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/SocialNetwork_01.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.276390200Z</date>
+  <millis>1526831721276</millis>
+  <nanos>390200</nanos>
+  <sequence>5</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>SEVERE</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[E] Integer not correct: Person</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.276390200Z</date>
+  <millis>1526831721276</millis>
+  <nanos>390200</nanos>
+  <sequence>6</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/SocialNetwork_02.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.276390200Z</date>
+  <millis>1526831721276</millis>
+  <nanos>390200</nanos>
+  <sequence>7</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>SEVERE</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[E] Check Rep Failed. In Class SocialNetwork: Sum of Weight not equals to 1.0.</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.276390200Z</date>
+  <millis>1526831721276</millis>
+  <nanos>390200</nanos>
+  <sequence>8</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/SocialNetwork_03.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.292011300Z</date>
+  <millis>1526831721292</millis>
+  <nanos>11300</nanos>
+  <sequence>9</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/SocialNetwork_04.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.292011300Z</date>
+  <millis>1526831721292</millis>
+  <nanos>11300</nanos>
+  <sequence>10</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>SEVERE</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[E] file read succeed, cannot append another file.</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.292011300Z</date>
+  <millis>1526831721292</millis>
+  <nanos>11300</nanos>
+  <sequence>11</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/SocialNetwork.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.307632Z</date>
+  <millis>1526831721307</millis>
+  <nanos>632000</nanos>
+  <sequence>12</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>SEVERE</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[E] file read succeed, cannot append another file.</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.307632Z</date>
+  <millis>1526831721307</millis>
+  <nanos>632000</nanos>
+  <sequence>13</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: file --in data/WordGraph.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.307632Z</date>
+  <millis>1526831721307</millis>
+  <nanos>632000</nanos>
+  <sequence>14</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>SEVERE</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[E] file read succeed, cannot append another file.</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.307632Z</date>
+  <millis>1526831721307</millis>
+  <nanos>632000</nanos>
+  <sequence>15</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: vertex --add SX</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.307632Z</date>
+  <millis>1526831721307</millis>
+  <nanos>632000</nanos>
+  <sequence>16</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: vertex --delete SX</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.307632Z</date>
+  <millis>1526831721307</millis>
+  <nanos>632000</nanos>
+  <sequence>17</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: vertex --add JS Person</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.323265900Z</date>
+  <millis>1526831721323</millis>
+  <nanos>265900</nanos>
+  <sequence>18</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>No line found</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.323265900Z</date>
+  <millis>1526831721323</millis>
+  <nanos>265900</nanos>
+  <sequence>19</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: F/20</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.323265900Z</date>
+  <millis>1526831721323</millis>
+  <nanos>265900</nanos>
+  <sequence>20</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: </message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.323265900Z</date>
+  <millis>1526831721323</millis>
+  <nanos>265900</nanos>
+  <sequence>21</sequence>
+  <logger>application.SocialNetworkApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: exit</message>
+</record>
+</log>

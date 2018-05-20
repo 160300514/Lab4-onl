@@ -1,0 +1,6 @@
+data/MovieGraph_01.dat
+file --in data/MovieGraph_02.dat
+file --in data/MovieGraph_03.dat
+file --in data/MovieGraph_04.dat
+file --in data/MovieGraph.dat
+exit

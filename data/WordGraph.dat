@@ -1,0 +1,10 @@
+GraphType = GraphPoet
+GraphName = Poets
+VertexType = Word
+Vertex = <JSX, Word>
+Vertex = <SX, Word>
+Vertex = <SSA, Word>
+EdgeType = WordNeighborhood
+Edge = <LCI, WordNeighborhood, 100, JSX, SX, Yes>
+Edge = <BFR, WordNeighborhood, 120, SX, SSA, Yes>
+Edge = <SCC, WordNeighborhood, 200, SSA, JSX, Yes>

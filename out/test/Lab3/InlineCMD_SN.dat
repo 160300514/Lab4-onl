@@ -1,0 +1,14 @@
+data/NetworkTopology.dat
+file --in data/MovieGraph.dat
+file --in data/SocialNetwork_01.dat
+file --in data/SocialNetwork_02.dat
+file --in data/SocialNetwork_03.dat
+file --in data/SocialNetwork_04.dat
+file --in data/SocialNetwork.dat
+file --in data/WordGraph.dat
+vertex --add SX
+vertex --delete SX
+vertex --add JS Person
+F/20
+
+exit

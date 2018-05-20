@@ -1,0 +1,539 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SocialNetworkApp</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">application</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SocialNetworkApp (application)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SocialNetworkApp</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    26.2%
+  </span>
+  <span class="absValue">
+    (75/ 286)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package application;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import exception.MessageFieldIncorrectException;
+<i>4</i>&nbsp;import exception.NoSuchTypeException;
+<i>5</i>&nbsp;import exception.RepFieldException;
+<i>6</i>&nbsp;import graph.SocialNetwork;
+<i>7</i>&nbsp;import helper.GeneralInputHelper;
+<i>8</i>&nbsp;import helper.GraphMetrics;
+<i>9</i>&nbsp;import logge.logGeneratorStream;
+<i>10</i>&nbsp;import vertex.Person;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.io.File;
+<i>13</i>&nbsp;import java.io.InputStream;
+<i>14</i>&nbsp;import java.io.StringWriter;
+<i>15</i>&nbsp;import java.time.Instant;
+<i>16</i>&nbsp;import java.util.Scanner;
+<i>17</i>&nbsp;
+<b class="fc"><i>18</i>&nbsp;public class SocialNetworkApp</b>
+<i>19</i>&nbsp;{
+<i>20</i>&nbsp;    private SocialNetwork gp;
+<b class="fc"><i>21</i>&nbsp;    private GeneralInputHelper generalInputHelper = new GeneralInputHelper();</b>
+<i>22</i>&nbsp;    private logGeneratorStream logs;
+<b class="fc"><i>23</i>&nbsp;    private Boolean flag = false;</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public void General(InputStream is) throws Exception {
+<i>26</i>&nbsp;        try{
+<b class="fc"><i>27</i>&nbsp;            logs = new logGeneratorStream(SocialNetworkApp.class.getName());</b>
+<i>28</i>&nbsp;        }
+<b class="nc"><i>29</i>&nbsp;        catch(Exception e)</b>
+<i>30</i>&nbsp;        {
+<i>31</i>&nbsp;            //logs.Appand(e.getMessage());
+<b class="nc"><i>32</i>&nbsp;            System.out.println(&quot;[E] Fatal Error.&quot;);</b>
+<b class="fc"><i>33</i>&nbsp;        }</b>
+<i>34</i>&nbsp;        //Calendar cl = new GregorianCalendar();
+<b class="fc"><i>35</i>&nbsp;        System.out.println(&quot;SocialGraph App\nVersion=1.0.\nAuthor=marisuki\nUse \&quot;SocialGraph --help\&quot; to get details.&quot;);</b>
+<b class="fc"><i>36</i>&nbsp;        Scanner sc = new Scanner(is);</b>
+<b class="fc"><i>37</i>&nbsp;        System.out.println(&quot;Input: FilePath(Absolute path recommended)&quot;);</b>
+<b class="fc"><i>38</i>&nbsp;        String fPath = sc.nextLine();</b>
+<b class="fc"><i>39</i>&nbsp;        logs.Appand(&quot;[I] Input: file: &quot;+fPath);</b>
+<b class="fc"><i>40</i>&nbsp;        File files = new File(fPath);</b>
+<b class="fc"><i>41</i>&nbsp;        if(files.exists())</b>
+<i>42</i>&nbsp;        {
+<i>43</i>&nbsp;            try
+<i>44</i>&nbsp;            {
+<b class="fc"><i>45</i>&nbsp;                gp = (SocialNetwork) generalInputHelper.fileReadConfig(fPath);</b>
+<i>46</i>&nbsp;                //flag = true;
+<b class="nc"><i>47</i>&nbsp;                if(gp!=null)</b>
+<b class="nc"><i>48</i>&nbsp;                    this.gp.checkRep();</b>
+<b class="nc"><i>49</i>&nbsp;                flag = true;</b>
+<i>50</i>&nbsp;            }
+<b class="nc"><i>51</i>&nbsp;            catch (MessageFieldIncorrectException | NoSuchTypeException mfe)</b>
+<i>52</i>&nbsp;            {
+<b class="nc"><i>53</i>&nbsp;                System.out.println(&quot;[I] File Read Failed.Choose another file, using file --in [FileName]&quot;);</b>
+<b class="nc"><i>54</i>&nbsp;                logs.Appand(mfe.getMessage());</b>
+<i>55</i>&nbsp;                //logs.Appand();
+<b class="nc"><i>56</i>&nbsp;                generalInputHelper.ClearCaches();</b>
+<i>57</i>&nbsp;            }
+<b class="nc"><i>58</i>&nbsp;            catch(RepFieldException e)</b>
+<i>59</i>&nbsp;            {
+<b class="nc"><i>60</i>&nbsp;                System.out.println(&quot;[I] File Read Failed.Choose another file, use file --in [FileName]&quot;);</b>
+<b class="nc"><i>61</i>&nbsp;                logs.Appand(e.getMessage());</b>
+<b class="nc"><i>62</i>&nbsp;                this.gp = null;</b>
+<b class="nc"><i>63</i>&nbsp;                generalInputHelper.ClearCaches();</b>
+<i>64</i>&nbsp;            }
+<b class="fc"><i>65</i>&nbsp;            catch( Exception e)</b>
+<i>66</i>&nbsp;            {
+<b class="fc"><i>67</i>&nbsp;                logs.Appand(e.getMessage());</b>
+<b class="fc"><i>68</i>&nbsp;            }</b>
+<i>69</i>&nbsp;        }
+<i>70</i>&nbsp;        else
+<i>71</i>&nbsp;        {
+<b class="nc"><i>72</i>&nbsp;            System.out.println(&quot;[E] File Path not exists.&quot;);</b>
+<b class="nc"><i>73</i>&nbsp;            logs.Appand(&quot;[E] File Path not exists.&quot;);</b>
+<i>74</i>&nbsp;        }
+<b class="fc"><i>75</i>&nbsp;        if(gp!=null) System.out.println(gp.toString());</b>
+<b class="fc"><i>76</i>&nbsp;        while(sc.hasNext())</b>
+<i>77</i>&nbsp;        {
+<b class="fc"><i>78</i>&nbsp;            boolean show = false;</b>
+<b class="fc"><i>79</i>&nbsp;            String str = sc.nextLine();</b>
+<b class="fc"><i>80</i>&nbsp;            logs.Appand(&quot;[I] Input CMD: &quot;+str);</b>
+<b class="fc"><i>81</i>&nbsp;            if(str.contains(&quot;SocialGraph --help&quot;))</b>
+<b class="nc"><i>82</i>&nbsp;                GraphPoetHelper();</b>
+<b class="fc"><i>83</i>&nbsp;            else if(str.contains(&quot;file --in&quot;))</b>
+<i>84</i>&nbsp;            {
+<b class="fc"><i>85</i>&nbsp;                if(flag)</b>
+<i>86</i>&nbsp;                {
+<b class="fc"><i>87</i>&nbsp;                    logs.Appand(&quot;[E] file read succeed, cannot append another file.&quot;);</b>
+<b class="fc"><i>88</i>&nbsp;                    continue;</b>
+<i>89</i>&nbsp;                }
+<b class="fc"><i>90</i>&nbsp;                String filePath = &quot;&quot;;</b>
+<i>91</i>&nbsp;                try{
+<b class="fc"><i>92</i>&nbsp;                    filePath = str.split(&quot; &quot;)[2];</b>
+<i>93</i>&nbsp;                }
+<b class="nc"><i>94</i>&nbsp;                catch(Exception e)</b>
+<i>95</i>&nbsp;                {
+<b class="nc"><i>96</i>&nbsp;                    System.out.println(e.toString());</b>
+<b class="nc"><i>97</i>&nbsp;                    logs.Appand(&quot;[E]&quot;+e.toString());</b>
+<b class="fc"><i>98</i>&nbsp;                }</b>
+<b class="fc"><i>99</i>&nbsp;                File file = new File(filePath);</b>
+<b class="fc"><i>100</i>&nbsp;                if(file.exists())</b>
+<i>101</i>&nbsp;                {
+<i>102</i>&nbsp;                    try{
+<b class="fc"><i>103</i>&nbsp;                        gp = (SocialNetwork) generalInputHelper.fileReadConfig(filePath);</b>
+<i>104</i>&nbsp;                    }
+<b class="fc"><i>105</i>&nbsp;                    catch (MessageFieldIncorrectException | NoSuchTypeException mfe)</b>
+<i>106</i>&nbsp;                    {
+<b class="fc"><i>107</i>&nbsp;                        System.out.println(&quot;[I] File Read Failed.Choose another file, use file --in [FileName]&quot;);</b>
+<b class="fc"><i>108</i>&nbsp;                        logs.Appand(mfe.getMessage());</b>
+<b class="fc"><i>109</i>&nbsp;                        generalInputHelper.ClearCaches();</b>
+<i>110</i>&nbsp;                    }
+<b class="fc"><i>111</i>&nbsp;                    catch (Exception e)</b>
+<i>112</i>&nbsp;                    {
+<b class="fc"><i>113</i>&nbsp;                        logs.Appand(e.getMessage());</b>
+<b class="fc"><i>114</i>&nbsp;                    }</b>
+<i>115</i>&nbsp;                }
+<i>116</i>&nbsp;                else
+<i>117</i>&nbsp;                {
+<b class="nc"><i>118</i>&nbsp;                    System.out.println(&quot;[E] File Path not exists.&quot;);</b>
+<b class="nc"><i>119</i>&nbsp;                    logs.Appand(&quot;[E] File Path not exists.&quot;);</b>
+<i>120</i>&nbsp;                }
+<i>121</i>&nbsp;                try
+<i>122</i>&nbsp;                {
+<b class="fc"><i>123</i>&nbsp;                    if(gp!=null)</b>
+<i>124</i>&nbsp;                    {
+<b class="fc"><i>125</i>&nbsp;                        this.gp.checkRep();</b>
+<b class="fc"><i>126</i>&nbsp;                        flag = true;</b>
+<b class="fc"><i>127</i>&nbsp;                        System.out.println(&quot;Graph Establish complete.\nUse \&quot;SocialGraph --help\&quot; to see operates supported.&quot;);</b>
+<i>128</i>&nbsp;                    }
+<i>129</i>&nbsp;                }
+<b class="fc"><i>130</i>&nbsp;                catch(RepFieldException e)</b>
+<i>131</i>&nbsp;                {
+<b class="fc"><i>132</i>&nbsp;                    System.out.println(&quot;[I] File Read Failed.Choose another file, use file --in [FileName]&quot;);</b>
+<b class="fc"><i>133</i>&nbsp;                    this.gp = null;</b>
+<b class="fc"><i>134</i>&nbsp;                    logs.Appand(e.getMessage());</b>
+<b class="fc"><i>135</i>&nbsp;                    generalInputHelper.ClearCaches();</b>
+<b class="fc"><i>136</i>&nbsp;                }</b>
+<b class="fc"><i>137</i>&nbsp;                if(gp!=null)</b>
+<b class="fc"><i>138</i>&nbsp;                    System.out.println(gp.toString());</b>
+<b class="fc"><i>139</i>&nbsp;            }</b>
+<b class="fc"><i>140</i>&nbsp;            else if(str.contains(&quot;modify&quot;))</b>
+<i>141</i>&nbsp;            {
+<b class="nc"><i>142</i>&nbsp;                if(!flag)</b>
+<i>143</i>&nbsp;                {
+<b class="nc"><i>144</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>145</i>&nbsp;                    continue;</b>
+<i>146</i>&nbsp;                }
+<b class="nc"><i>147</i>&nbsp;                String[] a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>148</i>&nbsp;                if(a.length!=4)</b>
+<b class="nc"><i>149</i>&nbsp;                    System.out.println(&quot;[E] Input Format Error, See --help for details.&quot;);</b>
+<b class="nc"><i>150</i>&nbsp;                if(a[1].equals(&quot;edge&quot;) || a[1].equals(&quot;Edge&quot;))</b>
+<i>151</i>&nbsp;                {
+<b class="nc"><i>152</i>&nbsp;                    gp = (SocialNetwork) generalInputHelper.LabelModifier(&quot;edge&quot;, a[2], a[3]);</b>
+<i>153</i>&nbsp;                }
+<b class="nc"><i>154</i>&nbsp;                else if(a[1].equals(&quot;vertex&quot;)||a[1].equals(&quot;Vertex&quot;))</b>
+<i>155</i>&nbsp;                {
+<b class="nc"><i>156</i>&nbsp;                    gp = (SocialNetwork) generalInputHelper.LabelModifier(&quot;vertex&quot;, a[2], a[3]);</b>
+<i>157</i>&nbsp;                }
+<b class="nc"><i>158</i>&nbsp;                System.out.println(gp.toString());</b>
+<b class="nc"><i>159</i>&nbsp;            }</b>
+<b class="fc"><i>160</i>&nbsp;            else if(str.contains(&quot;degreeCentrality&quot;))</b>
+<i>161</i>&nbsp;            {
+<b class="nc"><i>162</i>&nbsp;                if(!flag)</b>
+<i>163</i>&nbsp;                {
+<b class="nc"><i>164</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>165</i>&nbsp;                    continue;</b>
+<i>166</i>&nbsp;                }
+<b class="nc"><i>167</i>&nbsp;                String []a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>168</i>&nbsp;                System.out.println(&quot;DegreeCentrality Equals to:&quot;);</b>
+<b class="nc"><i>169</i>&nbsp;                if(a.length==1)</b>
+<b class="nc"><i>170</i>&nbsp;                    System.out.println(GraphMetrics.degreeCentrality(gp));</b>
+<i>171</i>&nbsp;                else
+<i>172</i>&nbsp;                {
+<b class="nc"><i>173</i>&nbsp;                    Person tmp = (Person) generalInputHelper.stov(a[1]);</b>
+<b class="nc"><i>174</i>&nbsp;                    if(tmp!=null)</b>
+<b class="nc"><i>175</i>&nbsp;                        System.out.println(GraphMetrics.degreeCentrality(gp, tmp));</b>
+<i>176</i>&nbsp;                }
+<b class="nc"><i>177</i>&nbsp;            }</b>
+<b class="fc"><i>178</i>&nbsp;            else if(str.contains(&quot;closenessCentrality&quot;))</b>
+<i>179</i>&nbsp;            {
+<b class="nc"><i>180</i>&nbsp;                if(!flag)</b>
+<i>181</i>&nbsp;                {
+<b class="nc"><i>182</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>183</i>&nbsp;                    continue;</b>
+<i>184</i>&nbsp;                }
+<b class="nc"><i>185</i>&nbsp;                String []a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>186</i>&nbsp;                assert a.length==2;</b>
+<b class="nc"><i>187</i>&nbsp;                Person tmp = (Person) generalInputHelper.stov(a[1]);</b>
+<b class="nc"><i>188</i>&nbsp;                if(tmp!=null)</b>
+<i>189</i>&nbsp;                {
+<b class="nc"><i>190</i>&nbsp;                    System.out.println(&quot;clossness Centrality: &quot;+GraphMetrics.closenessCentrality(gp, tmp));</b>
+<i>191</i>&nbsp;                }
+<b class="nc"><i>192</i>&nbsp;            }</b>
+<b class="fc"><i>193</i>&nbsp;            else if(str.contains(&quot;betweennessCentrality&quot;))</b>
+<i>194</i>&nbsp;            {
+<b class="nc"><i>195</i>&nbsp;                if(!flag)</b>
+<i>196</i>&nbsp;                {
+<b class="nc"><i>197</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>198</i>&nbsp;                    continue;</b>
+<i>199</i>&nbsp;                }
+<b class="nc"><i>200</i>&nbsp;                String[] a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>201</i>&nbsp;                assert a.length==2;</b>
+<b class="nc"><i>202</i>&nbsp;                Person tmp = (Person) generalInputHelper.stov(a[1]);</b>
+<b class="nc"><i>203</i>&nbsp;                if(tmp!=null)</b>
+<i>204</i>&nbsp;                {
+<b class="nc"><i>205</i>&nbsp;                    System.out.println(&quot;betweeness Centrality:&quot;+GraphMetrics.betweennessCentrality(gp, tmp));</b>
+<i>206</i>&nbsp;                }
+<b class="nc"><i>207</i>&nbsp;            }</b>
+<b class="fc"><i>208</i>&nbsp;            else if(str.contains(&quot;inDegreeCentrality&quot;))</b>
+<i>209</i>&nbsp;            {
+<b class="nc"><i>210</i>&nbsp;                if(!flag)</b>
+<i>211</i>&nbsp;                {
+<b class="nc"><i>212</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>213</i>&nbsp;                    continue;</b>
+<i>214</i>&nbsp;                }
+<b class="nc"><i>215</i>&nbsp;                String[] a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>216</i>&nbsp;                assert a.length==2;</b>
+<b class="nc"><i>217</i>&nbsp;                Person tmp = (Person) generalInputHelper.stov(a[1]);</b>
+<b class="nc"><i>218</i>&nbsp;                if(tmp!=null)</b>
+<i>219</i>&nbsp;                {
+<b class="nc"><i>220</i>&nbsp;                    System.out.println(&quot;indegree Centrality:&quot;+GraphMetrics.inDegreeCentrality(gp, tmp));</b>
+<i>221</i>&nbsp;                }
+<b class="nc"><i>222</i>&nbsp;            }</b>
+<b class="fc"><i>223</i>&nbsp;            else if(str.contains(&quot;outDegreeCentrality&quot;))</b>
+<i>224</i>&nbsp;            {
+<b class="nc"><i>225</i>&nbsp;                if(!flag)</b>
+<i>226</i>&nbsp;                {
+<b class="nc"><i>227</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>228</i>&nbsp;                    continue;</b>
+<i>229</i>&nbsp;                }
+<b class="nc"><i>230</i>&nbsp;                String[] a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>231</i>&nbsp;                assert a.length==2;</b>
+<b class="nc"><i>232</i>&nbsp;                Person tmp = (Person) generalInputHelper.stov(a[1]);</b>
+<b class="nc"><i>233</i>&nbsp;                if(tmp!=null)</b>
+<i>234</i>&nbsp;                {
+<b class="nc"><i>235</i>&nbsp;                    System.out.println(&quot;outdegree Centrality:&quot;+GraphMetrics.outDegreeCentrality(gp, tmp));</b>
+<i>236</i>&nbsp;                }
+<b class="nc"><i>237</i>&nbsp;            }</b>
+<b class="fc"><i>238</i>&nbsp;            else if(str.contains(&quot;distance&quot;))</b>
+<i>239</i>&nbsp;            {
+<b class="nc"><i>240</i>&nbsp;                if(!flag)</b>
+<i>241</i>&nbsp;                {
+<b class="nc"><i>242</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>243</i>&nbsp;                    continue;</b>
+<i>244</i>&nbsp;                }
+<b class="nc"><i>245</i>&nbsp;                String[] a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>246</i>&nbsp;                assert a.length==3;</b>
+<b class="nc"><i>247</i>&nbsp;                Person tmp1 = (Person) generalInputHelper.stov(a[1]);</b>
+<b class="nc"><i>248</i>&nbsp;                Person tmp2 = (Person) generalInputHelper.stov(a[2]);</b>
+<b class="nc"><i>249</i>&nbsp;                if(tmp1!=null&amp;&amp;tmp2!=null)</b>
+<i>250</i>&nbsp;                {
+<b class="nc"><i>251</i>&nbsp;                    System.out.println(&quot;distance:&quot;+GraphMetrics.distance(gp, tmp1, tmp2));</b>
+<i>252</i>&nbsp;                }
+<b class="nc"><i>253</i>&nbsp;            }</b>
+<b class="fc"><i>254</i>&nbsp;            else if(str.contains(&quot;eccentricity&quot;))</b>
+<i>255</i>&nbsp;            {
+<b class="nc"><i>256</i>&nbsp;                if(!flag)</b>
+<i>257</i>&nbsp;                {
+<b class="nc"><i>258</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>259</i>&nbsp;                    continue;</b>
+<i>260</i>&nbsp;                }
+<b class="nc"><i>261</i>&nbsp;                String[] a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>262</i>&nbsp;                assert a.length==2;</b>
+<b class="nc"><i>263</i>&nbsp;                Person tmp = (Person) generalInputHelper.stov(a[1]);</b>
+<b class="nc"><i>264</i>&nbsp;                if(tmp!=null)</b>
+<i>265</i>&nbsp;                {
+<b class="nc"><i>266</i>&nbsp;                    System.out.println(&quot;eccentricity:&quot;+GraphMetrics.eccentricity(gp, tmp));</b>
+<i>267</i>&nbsp;                }
+<b class="nc"><i>268</i>&nbsp;            }</b>
+<b class="fc"><i>269</i>&nbsp;            else if(str.contains(&quot;radius&quot;))</b>
+<i>270</i>&nbsp;            {
+<b class="nc"><i>271</i>&nbsp;                if(!flag)</b>
+<i>272</i>&nbsp;                {
+<b class="nc"><i>273</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>274</i>&nbsp;                    continue;</b>
+<i>275</i>&nbsp;                }
+<b class="nc"><i>276</i>&nbsp;                String[] a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>277</i>&nbsp;                assert a.length==1;</b>
+<b class="nc"><i>278</i>&nbsp;                System.out.println(&quot;radius:&quot;+GraphMetrics.radius(gp));</b>
+<b class="nc"><i>279</i>&nbsp;            }</b>
+<b class="fc"><i>280</i>&nbsp;            else if(str.contains(&quot;diameter&quot;))</b>
+<i>281</i>&nbsp;            {
+<b class="nc"><i>282</i>&nbsp;                if(!flag)</b>
+<i>283</i>&nbsp;                {
+<b class="nc"><i>284</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>285</i>&nbsp;                    continue;</b>
+<i>286</i>&nbsp;                }
+<b class="nc"><i>287</i>&nbsp;                String[] a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>288</i>&nbsp;                assert a.length==1;</b>
+<b class="nc"><i>289</i>&nbsp;                System.out.println(&quot;diameter:&quot;+GraphMetrics.diameter(gp));</b>
+<b class="nc"><i>290</i>&nbsp;            }</b>
+<b class="fc"><i>291</i>&nbsp;            else if(str.contains(&quot;save&quot;))</b>
+<i>292</i>&nbsp;            {
+<b class="nc"><i>293</i>&nbsp;                if(!flag)</b>
+<i>294</i>&nbsp;                {
+<b class="nc"><i>295</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>296</i>&nbsp;                    continue;</b>
+<i>297</i>&nbsp;                }
+<b class="nc"><i>298</i>&nbsp;                String []a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>299</i>&nbsp;                if(a[1].equals(&quot;-s&quot;))</b>
+<i>300</i>&nbsp;                {
+<b class="nc"><i>301</i>&nbsp;                    generalInputHelper.SaveChange(gp, a[2]);</b>
+<b class="nc"><i>302</i>&nbsp;                    System.out.println(&quot;Save finished.&quot;);</b>
+<i>303</i>&nbsp;                }
+<b class="nc"><i>304</i>&nbsp;                else if(a[1].equals(&quot;-recall&quot;))</b>
+<i>305</i>&nbsp;                {
+<b class="nc"><i>306</i>&nbsp;                    gp = (SocialNetwork) generalInputHelper.recallSpecGra(a[2]);</b>
+<i>307</i>&nbsp;                }
+<b class="nc"><i>308</i>&nbsp;            }</b>
+<b class="fc"><i>309</i>&nbsp;            else if(str.contains(&quot;log&quot;))</b>
+<i>310</i>&nbsp;            {
+<b class="nc"><i>311</i>&nbsp;                String[] a = str.split(&quot; &quot;);</b>
+<b class="nc"><i>312</i>&nbsp;                String key = &quot;&quot;;</b>
+<i>313</i>&nbsp;                try{
+<b class="nc"><i>314</i>&nbsp;                    key = a[2];</b>
+<i>315</i>&nbsp;                }
+<b class="nc"><i>316</i>&nbsp;                catch (Exception e)</b>
+<i>317</i>&nbsp;                {
+<b class="nc"><i>318</i>&nbsp;                    logs.Appand(&quot;[E]&quot;+e.getMessage());</b>
+<b class="nc"><i>319</i>&nbsp;                    System.out.println(&quot;[E] log input not convinced.&quot;);</b>
+<b class="nc"><i>320</i>&nbsp;                }</b>
+<b class="nc"><i>321</i>&nbsp;                if(key.contains(&quot;date&quot;)||key.contains(&quot;time&quot;))</b>
+<i>322</i>&nbsp;                {
+<b class="nc"><i>323</i>&nbsp;                    System.out.println(&quot;Input a fixed time scale or range or input: pass to search the logs for the whole time&quot;);</b>
+<b class="nc"><i>324</i>&nbsp;                    System.out.println(&quot;Input can be:YYYY-MM-DD HH:MM&quot;);</b>
+<b class="nc"><i>325</i>&nbsp;                    System.out.println(&quot;If the range is needed, please use the format: Time1,Time2&quot;);</b>
+<b class="nc"><i>326</i>&nbsp;                    String time = sc.nextLine();</b>
+<b class="nc"><i>327</i>&nbsp;                    String []t = time.split(&quot;, &quot;);</b>
+<i>328</i>&nbsp;                    try{
+<b class="nc"><i>329</i>&nbsp;                        String s1 = t[0];String s2 = &quot;&quot;;</b>
+<b class="nc"><i>330</i>&nbsp;                        if(t.length==1)</b>
+<i>331</i>&nbsp;                        {
+<b class="nc"><i>332</i>&nbsp;                            String []ss = s1.split(&quot; &quot;);</b>
+<b class="nc"><i>333</i>&nbsp;                            s1 = ss[0]+&quot;T&quot;+ss[1]+&quot;Z&quot;;</b>
+<b class="nc"><i>334</i>&nbsp;                        }</b>
+<b class="nc"><i>335</i>&nbsp;                        else if(t.length==2)</b>
+<i>336</i>&nbsp;                        {
+<b class="nc"><i>337</i>&nbsp;                            s1 = t[0];</b>
+<b class="nc"><i>338</i>&nbsp;                            s2 = t[1];</b>
+<b class="nc"><i>339</i>&nbsp;                            String []ss = s1.split(&quot; &quot;);</b>
+<b class="nc"><i>340</i>&nbsp;                            s1 = ss[0]+&quot;T&quot;+ss[1]+&quot;Z&quot;;</b>
+<b class="nc"><i>341</i>&nbsp;                            ss = s2.split(&quot; &quot;);</b>
+<b class="nc"><i>342</i>&nbsp;                            s2 = ss[0]+&quot;T&quot;+ss[1]+&quot;Z&quot;;</b>
+<i>343</i>&nbsp;                        }
+<b class="nc"><i>344</i>&nbsp;                        Instant it1 = Instant.parse(s1);</b>
+<b class="nc"><i>345</i>&nbsp;                        Instant it2 = Instant.now();</b>
+<b class="nc"><i>346</i>&nbsp;                        if(t.length==2)</b>
+<i>347</i>&nbsp;                        {
+<b class="nc"><i>348</i>&nbsp;                            it2 = Instant.parse(s2);</b>
+<i>349</i>&nbsp;                        }
+<i>350</i>&nbsp;                        //it1 = Instant.parse(t[0])
+<b class="nc"><i>351</i>&nbsp;                        if(t.length==1)</b>
+<i>352</i>&nbsp;                        {
+<b class="nc"><i>353</i>&nbsp;                            System.out.println(&quot;The logs asked:&quot;);</b>
+<b class="nc"><i>354</i>&nbsp;                            for(String s:logs.resolve(it1))</b>
+<i>355</i>&nbsp;                            {
+<b class="nc"><i>356</i>&nbsp;                                System.out.println(s);</b>
+<b class="nc"><i>357</i>&nbsp;                            }</b>
+<i>358</i>&nbsp;                        }
+<b class="nc"><i>359</i>&nbsp;                        else if(t.length==2)</b>
+<i>360</i>&nbsp;                        {
+<b class="nc"><i>361</i>&nbsp;                            if(it1.isAfter(it2))</b>
+<i>362</i>&nbsp;                            {
+<b class="nc"><i>363</i>&nbsp;                                Instant it = it2;</b>
+<b class="nc"><i>364</i>&nbsp;                                it2 = it1;</b>
+<b class="nc"><i>365</i>&nbsp;                                it1 = it;</b>
+<i>366</i>&nbsp;                            }
+<b class="nc"><i>367</i>&nbsp;                            System.out.println(&quot;The logs asked:&quot;);</b>
+<b class="nc"><i>368</i>&nbsp;                            for(String s: logs.resolve(it1,it2))</b>
+<i>369</i>&nbsp;                            {
+<b class="nc"><i>370</i>&nbsp;                                System.out.println(s);</b>
+<b class="nc"><i>371</i>&nbsp;                            }</b>
+<i>372</i>&nbsp;                        }
+<i>373</i>&nbsp;                        else
+<i>374</i>&nbsp;                        {
+<b class="nc"><i>375</i>&nbsp;                            logs.Appand(&quot;[E] Time Input format Error.&quot;);</b>
+<i>376</i>&nbsp;                        }
+<i>377</i>&nbsp;                    }
+<b class="nc"><i>378</i>&nbsp;                    catch (Exception e)</b>
+<i>379</i>&nbsp;                    {
+<b class="nc"><i>380</i>&nbsp;                        logs.Appand(&quot;[E] &quot;+e.getMessage());</b>
+<b class="nc"><i>381</i>&nbsp;                    }</b>
+<b class="nc"><i>382</i>&nbsp;                }</b>
+<b class="nc"><i>383</i>&nbsp;                else if(key.contains(&quot;information&quot;))</b>
+<i>384</i>&nbsp;                {
+<b class="nc"><i>385</i>&nbsp;                    System.out.println(&quot;The logs asked:&quot;);</b>
+<b class="nc"><i>386</i>&nbsp;                    for(String s:logs.resolve(&quot;[I]&quot;))</b>
+<b class="nc"><i>387</i>&nbsp;                        System.out.println(s);</b>
+<i>388</i>&nbsp;                }
+<b class="nc"><i>389</i>&nbsp;                else if(key.contains(&quot;error&quot;))</b>
+<i>390</i>&nbsp;                {
+<b class="nc"><i>391</i>&nbsp;                    System.out.println(&quot;The logs asked:&quot;);</b>
+<b class="nc"><i>392</i>&nbsp;                    for(String s:logs.resolve(&quot;[E]&quot;))</b>
+<b class="nc"><i>393</i>&nbsp;                        System.out.println(s);</b>
+<i>394</i>&nbsp;                }
+<b class="nc"><i>395</i>&nbsp;                else if(key.contains(&quot;warning&quot;))</b>
+<i>396</i>&nbsp;                {
+<b class="nc"><i>397</i>&nbsp;                    System.out.println(&quot;The logs asked:&quot;);</b>
+<b class="nc"><i>398</i>&nbsp;                    for(String s:logs.resolve(&quot;[W]&quot;))</b>
+<b class="nc"><i>399</i>&nbsp;                        System.out.println(s);</b>
+<i>400</i>&nbsp;                }
+<i>401</i>&nbsp;                else
+<i>402</i>&nbsp;                {
+<b class="nc"><i>403</i>&nbsp;                    System.out.println(&quot;The logs asked:&quot;);</b>
+<b class="nc"><i>404</i>&nbsp;                    for(String s:logs.resolve(key))</b>
+<b class="nc"><i>405</i>&nbsp;                        System.out.println(s);</b>
+<i>406</i>&nbsp;                }
+<b class="nc"><i>407</i>&nbsp;            }</b>
+<b class="fc"><i>408</i>&nbsp;            else if(str.contains(&quot;exit&quot;))</b>
+<i>409</i>&nbsp;            {
+<b class="fc"><i>410</i>&nbsp;                is.close();</b>
+<b class="fc"><i>411</i>&nbsp;                sc.close();</b>
+<b class="fc"><i>412</i>&nbsp;                return;</b>
+<i>413</i>&nbsp;            }
+<i>414</i>&nbsp;            else
+<i>415</i>&nbsp;            {
+<b class="fc"><i>416</i>&nbsp;                if(!flag)</b>
+<i>417</i>&nbsp;                {
+<b class="nc"><i>418</i>&nbsp;                    logs.Appand(&quot;[E] file input not completed.&quot;);</b>
+<b class="nc"><i>419</i>&nbsp;                    continue;</b>
+<i>420</i>&nbsp;                }
+<i>421</i>&nbsp;                try{
+<b class="fc"><i>422</i>&nbsp;                    generalInputHelper.listenCmdInput(str, is);</b>
+<i>423</i>&nbsp;                }
+<b class="fc"><i>424</i>&nbsp;                catch (Exception e)</b>
+<i>425</i>&nbsp;                {
+<b class="fc"><i>426</i>&nbsp;                    logs.Appand(e.getMessage());</b>
+<b class="fc"><i>427</i>&nbsp;                }</b>
+<i>428</i>&nbsp;                //logs.Appand(&quot;[I] Input CMD: &quot;+str);
+<b class="fc"><i>429</i>&nbsp;                if(gp!=null) System.out.println(gp.toString());</b>
+<i>430</i>&nbsp;            }
+<b class="fc"><i>431</i>&nbsp;        }</b>
+<b class="nc"><i>432</i>&nbsp;    }</b>
+<i>433</i>&nbsp;
+<i>434</i>&nbsp;    private void GraphPoetHelper()
+<i>435</i>&nbsp;    {
+<b class="nc"><i>436</i>&nbsp;        StringWriter swt = new StringWriter();</b>
+<b class="nc"><i>437</i>&nbsp;        swt.write(&quot;SocialNetwork App\nVersion=1.0.\nAuthor=marisuki\n&quot;);</b>
+<b class="nc"><i>438</i>&nbsp;        swt.write(&quot;\&quot;fileinput\&quot;\t: file --in FilePath[StringType: Absolute Path Recommended]\n&quot;);</b>
+<b class="nc"><i>439</i>&nbsp;        swt.write(&quot;\&quot;Using CMD as Graph Input: must as an adaptive method of file input\&quot;\n\t\t: choice1: vertex --add label type\n&quot;);</b>
+<b class="nc"><i>440</i>&nbsp;        swt.write(&quot;\t\tchoice2: vertex --delete [regex]\n\t\tchoice3: edge --add label type [weighted] weight [directed] labelV1, labelV2\n&quot;);</b>
+<b class="nc"><i>441</i>&nbsp;        swt.write(&quot;choice4: edge --delete regex\n&quot;);</b>
+<b class="nc"><i>442</i>&nbsp;        swt.write(&quot;Usage to calculate Graph:\n&quot;);</b>
+<b class="nc"><i>443</i>&nbsp;        swt.write(&quot;choice1: \&quot;degreeCentrality\&quot; Or \&quot;degreeCentrality label[Pattern of an Vertex]\&quot;\n&quot;);</b>
+<b class="nc"><i>444</i>&nbsp;        swt.write(&quot;choice2: \&quot;closenessCentrality label[Pattern of an Vertex]\nchoice3: \&quot;betweennessCentrality label[Pattern of an Vertex]\&quot;\n&quot;);</b>
+<b class="nc"><i>445</i>&nbsp;        swt.write(&quot;choice3: \&quot;inDegreeCentrality label\&quot; Or \&quot;outDegreeCentrality label\&quot;\n&quot;);</b>
+<b class="nc"><i>446</i>&nbsp;        swt.write(&quot;choice4: \&quot;distance label1 label2\&quot;\nchoice5: \&quot;eccentricity label\&quot;\n&quot;);</b>
+<b class="nc"><i>447</i>&nbsp;        swt.write(&quot;choice6: \&quot;radius\&quot;\nchoice7: \&quot;diameter\&quot;\n&quot;);</b>
+<b class="nc"><i>448</i>&nbsp;        swt.write(&quot;choice8: modify vertex/edge [preLabel] [modifiedLabel]\n&quot;);</b>
+<b class="nc"><i>449</i>&nbsp;        swt.write(&quot;choice9: exit: exit the program\n&quot;);</b>
+<b class="nc"><i>450</i>&nbsp;        swt.write(&quot;Log ask: log --get [key]: key choice: date/time, ClassName, information/error/warning, other keys. Time:UTC\n&quot;);</b>
+<b class="nc"><i>451</i>&nbsp;        swt.write(&quot;Memory-hold on: \&quot;save -s Save_label\&quot; to save temporary graph. Or \&quot;save -recall Save_label\&quot; to call back a history savage.\n&quot;);</b>
+<b class="nc"><i>452</i>&nbsp;        swt.write(&quot;While you input commands, please DO NOT add -&gt;\&quot;&lt;-.\n&quot;);</b>
+<b class="nc"><i>453</i>&nbsp;        swt.write(&quot;CopyRight. 2018-5\n&quot;);</b>
+<b class="nc"><i>454</i>&nbsp;        System.out.println(swt.toString());</b>
+<b class="nc"><i>455</i>&nbsp;    }</b>
+<i>456</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-05-20 23:48</div>
+</div>
+</body>
+</html>

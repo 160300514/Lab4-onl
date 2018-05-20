@@ -1,0 +1,29 @@
+data/NetworkTopology.dat
+file --in data/WordGraph2wwewq.dat
+file --in data/WordGraph.dat
+save -s SQ1
+vertex --add R Word
+GraphPoet --help
+edge --add TMP SX R
+save -recall SQ1
+degreeCentrality
+degreeCentrality SX
+closenessCentrality SX
+betweennessCentrality SX
+vertex --add S Word
+vertex --add SS dsdww
+edge --add TMP SX R
+edge --add TMP SX S
+inDegreeCentrality SX
+outDegreeCentrality SX
+modify vertex SX SXX
+distance SX JSX
+radius
+diameter
+log --get information
+log --get error
+log --get time
+2018-05-19 11:02
+edge --delete LCI
+vertex --delete $R[\\w]+
+exit

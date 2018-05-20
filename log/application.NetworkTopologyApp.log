@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-05-20T15:55:21.629074100Z</date>
+  <millis>1526831721629</millis>
+  <nanos>74100</nanos>
+  <sequence>53</sequence>
+  <logger>application.NetworkTopologyApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input: file: data/NetworkTopology.dat</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.629074100Z</date>
+  <millis>1526831721629</millis>
+  <nanos>74100</nanos>
+  <sequence>54</sequence>
+  <logger>application.NetworkTopologyApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: edge --add RQ CommentTie weighted=Y 9.0 directed=Y R SQ</message>
+</record>
+<record>
+  <date>2018-05-20T15:55:21.629074100Z</date>
+  <millis>1526831721629</millis>
+  <nanos>74100</nanos>
+  <sequence>55</sequence>
+  <logger>application.NetworkTopologyApp</logger>
+  <level>INFO</level>
+  <class>logge.logGeneratorStream</class>
+  <method>Appand</method>
+  <thread>1</thread>
+  <message>[I] Input CMD: exit</message>
+</record>
+</log>
